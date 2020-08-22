@@ -53,18 +53,3 @@ if ( in_array( 'disable_formats', $quevedo_settings, true ) ) {
 		100
 	);
 }
-
-// Fix uploads filenames.
-if ( in_array( 'fix_filenames', $quevedo_settings, true ) ) {
-	// Reference: https://developer.wordpress.org/reference/functions/remove_accents/ .
-	add_filter(
-		'sanitize_file_name',
-		function( $filename, $filename_raw ) {
-			return remove_accents( $filename );
-		},
-		10,
-		2
-	);
-}
-
-add_action( 'init', 'quevedo_file_name' );

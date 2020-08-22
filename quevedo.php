@@ -30,10 +30,6 @@ $quevedo_options_array = array(
 		'title'       => __( 'Disable author archives', 'quevedo' ),
 		'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage.', 'quevedo' ),
 	),
-	'fix_filenames'           => array(
-		'title'       => __( 'Fix uploads filenames', 'quevedo' ),
-		'description' => __( 'Replaces especial characters from the uploaded files filenames', 'quevedo' ),
-	),
 
 );
 
