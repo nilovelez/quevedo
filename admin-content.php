@@ -175,32 +175,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<h2><?php esc_html_e( 'Default images', 'quevedo' ); ?></h2>
 
-				<?php
-				$quevedo_cpts = get_post_types(
-					array(
-						'public' => true,
-					),
-					'objects',
-					'and'
-				);
-				?>
 
 				<table class="form-table">
 				<tbody>
 
 				<?php
 				foreach ( $quevedo_cpts as $quevedo_cpt ) {
-					if ( in_array( $quevedo_cpt->name, array( 'attachment', 'product' ), true ) ) {
-						continue;
-					}
+					$quevedo_cpt_field_id = 'quevedo_cpt_image_' . $quevedo_cpt->name;
 					?>
 				<tr>
 					<th scope="row">
 						<?php // Translators: Post type name, plural lowercase (ex: pages, posts). ?>
-						<label for="accept_text"><?php echo esc_html( sprintf( __( 'Defaut image for %s', 'quevedo' ), mb_strtolower( $quevedo_cpt->label ) ) ); ?></label>
+						<label for="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>"><?php echo esc_html( sprintf( __( 'Defaut image for %s', 'quevedo' ), mb_strtolower( $quevedo_cpt->label ) ) ); ?></label>
 					</th>
 					<td>
-						<input name="accept_text" id="accept_text" value="<?php echo esc_attr( $quevedo_cpt->name ); ?>" class="regular-text ltr" type="text">
+						<input name="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>" id="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>" value="<?php echo esc_attr( $quevedo_cpt->name ); ?>" class="regular-text ltr" type="text">
 						<?php // Translators: Post type name, plural lowercase (ex: pages, posts). ?>
 						<p class="description"><?php echo esc_html( sprintf( __( 'Image id or URL, %s without a featured image will use this one.', 'quevedo' ), mb_strtolower( $quevedo_cpt->label ) ) ); ?></p>
 					</td>
@@ -223,11 +212,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 
-
-
-<?php
-$my_saved_attachment_post_id = get_option( 'media_selector_attachment_id', 0 );
-?>
 
 <script>
 /*

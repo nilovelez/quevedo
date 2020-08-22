@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Quevedo
- * Description: .
+ * Description: Quevedo is a suite of tools for bloggers and content creators.
  * Version: 0.1
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
@@ -84,14 +84,27 @@ add_action(
  */
 function submenu_page_callback() {
 	global $quevedo_settings, $quevedo_options_array;
-
 	read_settings();
 	$all_powertools_checked = ( count( array_intersect( array_keys( $quevedo_options_array ), $quevedo_settings ) ) === count( $quevedo_options_array ) ) ? true : false;
+
+	$quevedo_cpts = get_post_types(
+		array(
+			'public' => true,
+		),
+		'objects',
+		'and'
+	);
+	foreach ( $quevedo_cpts as $quevedo_cpt ) {
+		if ( in_array( $quevedo_cpt->name, array( 'attachment', 'product' ), true ) ) {
+			unset( $quevedo_cpts[ $quevedo_cpt->name ] );
+		}
+	}
+
 	include plugin_dir_path( __FILE__ ) . 'admin-content.php';
 }
 
 /**
-Returns an array with the plugin settings, defaults to blank array.
+ * Returns an array with the plugin settings, defaults to blank array.
  */
 function read_settings() {
 	global $quevedo_settings;
