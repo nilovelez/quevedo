@@ -11,6 +11,19 @@ namespace quevedo;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+
+//$my_saved_attachment_post_id = $quevedo_settings['thumbnail'];
+$quevedo_default_thumbnail   = plugin_dir_url( __FILE__ ) . 'img/no-image.svg';
+if ( 0 === $quevedo_settings['thumbnail'] ) {
+	$quevedo_current_thumbnail = $quevedo_default_thumbnail;
+} else {
+	$quevedo_current_thumbnail = wp_get_attachment_url( $quevedo_settings['thumbnail'] );
+	if ( ! $quevedo_current_thumbnail ) {
+		$quevedo_current_thumbnail = $quevedo_default_thumbnail;
+	}
+}
+
 ?>
 <div class="wrap" style="max-width: 1000px;">
 
@@ -88,10 +101,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	width: 60px;
 }
 
-#quevedo-shortcode-list {
-	padding: 1em 1em 0;
+
+.quevedo-settings-card {
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+	border-radius: 2px;
 	background-color: #fff;
-	border: 1px solid #eee;
+	margin-bottom: 24px;
+}
+.quevedo-settings-card-header {
+	padding: 16px 24px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.quevedo-settings-card-subtitle {
+	margin: 4px 0 0;
+	color: #757575;
+}
+.quevedo-settings-card-header h2 {
+	margin: 0;
+}
+.quevedo-settings-card-body {
+	padding: 16px 24px 0;
+}
+
+
+#quevedo-shortcode-list {
+	padding-bottom: 24px;
 }
 #quevedo-shortcode-list dt {
 	font-family: monospace;
@@ -103,109 +137,110 @@ if ( ! defined( 'ABSPATH' ) ) {
 	padding-left: 3em;
 }
 
-.tab-pane {
-	display: none;
+.quevedo-image-preview-wrapper {
+	position: relative;
+	width: auto;
 }
-.tab-pane-active {
-	display: block;
+#quevedo_thumbnail_preview {
+	max-width: 100%;
+	max-height: 200px;
+	width: auto;
 }
+#quevedo_remove_image_button {
+
+}
+
 </style>
 
 
 	<h1><?php esc_html_e( 'Quevedo writer tools', 'quevedo' ); ?></h1>
-	<hr class="wp-header-end">
 
 	<p><?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum suscipit mi, vitae blandit eros feugiat id. Vivamus fermentum sed ligula vitae venenatis. Nunc ut vestibulum turpis. Quisque vel felis elit. Integer luctus lorem non arcu sagittis commodo. Integer at maximus elit, ut egestas ligula.', 'quevedo' ); ?></p>
-
-	<h2 class="nav-tab-wrapper" role="tablist">
-		<a href="#quevedo-features" class="nav-tab nav-tab-active"><?php esc_html_e( 'WordPress features', 'quevedo' ); ?></a>
-		<a href="#quevedo-images" class="nav-tab"><?php esc_html_e( 'Default images', 'quevedo' ); ?></a>
-		<a href="#quevedo-shortcodes" class="nav-tab"><?php esc_html_e( 'Shortcodes', 'quevedo' ); ?></a>
-	</h2>
+	<hr class="wp-header-end">
 
 
 	<div class="feature-section">
+		<div id="quevedo-features" class="quevedo-settings-card">
 
-		<form id="quevedo-options" action="" method="POST">
+			<div class="quevedo-settings-card-header">
+				<h2><?php esc_html_e( 'WordPress features', 'quevedo' ); ?></h2>
+				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Some minor theaks to make WordPress a bit more appealing to bloggers and single-user site owners.', 'quevedo' ); ?></p>
+			</div>
+			<div class="quevedo-settings-card-body">
+				<form id="quevedo-features-form" action="" method="POST">
+					<input type="hidden" name="quevedo_features_saved" value="true">
+					<?php wp_nonce_field( 'quevedo-features-save' ); ?>
 
-			<div id="quevedo-shortcodes" class="tab-pane">
+					<table class="form-table" id="quevedo-table">
 
+					<tbody>
+					<?php foreach ( $quevedo_features_array as $quevedo_feature_slug => $quevedo_feature ) { ?>
+						<tr>
+						<td class="check-column">
+							<fieldset>
+								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_feature['title'] ); ?></span></legend>
+								<label class="switch">
+									<input type="checkbox" name="featureEnabled[]" value="<?php echo esc_attr( $quevedo_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_feature_slug, $quevedo_settings['features'], true ), true ); ?>>
+									<span class="slider round"></span>
+								</label>
+							</fieldset>
+						</td><td>
+							<strong><?php echo esc_html( $quevedo_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_feature['description'] ); ?>
+						</td></tr>
+
+					<?php } ?>
+
+					</tbody>
+					</table>
+					<?php submit_button(); ?>
+				</form>
+			</div>
+		</div>
+
+		<div id="quevedo-images" class="quevedo-settings-card">
+			<div class="quevedo-settings-card-header">
+				<h2><?php esc_html_e( 'Default post image', 'quevedo' ); ?></h2>
+			</div>
+
+			<div class="quevedo-settings-card-body">
+
+			<?php wp_enqueue_media(); ?>
+
+
+			<form id="quevedo-thumbnail-form" action="" method="POST">
+				<input type="hidden" name="quevedo_thumbnail_saved" value="true">
+				<?php wp_nonce_field( 'quevedo-thumbnail-save' ); ?>
+
+				<input type="hidden" name="quevedo_thumbnail_id" id="quevedo_thumbnail_id" value="<?php echo esc_attr( $quevedo_settings['thumbnail'] ); ?>">
+
+				<div class="quevedo-image-preview-wrapper">
+					<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>">
+				</div>
+				<P>
+					<input id="quevedo_upload_image_button" type="button" class="button" value="<?php esc_attr_e( 'Choose image', 'quevedo' ); ?>">
+					<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
+				</P>
+				<p class="submit">
+					<?php submit_button( null, 'primary', 'submit', false ); ?>
+				</p>
+			</form>
+			</div>
+		</div>
+
+		<div id="quevedo-shortcodes" class="quevedo-settings-card">
+			<div class="quevedo-settings-card-header">
 				<h2><?php esc_html_e( 'Shortcodes', 'quevedo' ); ?></h2>
-
+			</div>
+			<div class="quevedo-settings-card-body">
 				<dl id="quevedo-shortcode-list">
 					<dt>[year]</dt>
 					<dd><?php esc_html_e( 'Returns the current year in four-digit format. Very useful for copyright notices.', 'quevedo' ); ?></dd>
 					<dt>[lorem words="200"]</dt>
 					<dd><?php esc_html_e( 'Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "words" defines the number of words, default is 200.', 'quevedo' ); ?></dd>
 				</dl>
-
 			</div>
+		</div>
 
-			<div id="quevedo-features" class="tab-pane tab-pane-active">
-
-				<h2><?php esc_html_e( 'WordPress features', 'quevedo' ); ?></h2>
-
-				<?php wp_nonce_field( 'quevedo_save_options' ); ?>
-
-				<input type="hidden" name="quevedo-saved" value="true">
-
-
-				<table class="form-table" id="quevedo-table">
-
-				<tbody>
-				<?php foreach ( $quevedo_options_array as $quevedo_option_slug => $quevedo_option ) { ?>
-					<tr>
-					<td><fieldset><legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_option_slug ); ?></span></legend>
-
-						<label class="switch">
-							<input type="checkbox" name="optionEnabled[]" value="<?php echo esc_attr( $quevedo_option_slug ); ?>" id="<?php echo esc_attr( $quevedo_option_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_option_slug, $quevedo_settings, true ), true ); ?>>
-							<span class="slider round"></span>
-						</label>
-						<label for="<?php echo esc_attr( $quevedo_option_slug ); ?>_fld"><strong><?php echo esc_html( $quevedo_option['title'] ); ?></strong><br><?php echo esc_html( $quevedo_option['description'] ); ?></label>
-					</fieldset></td></tr>
-
-				<?php } ?>
-
-				</tbody>
-				</table>
-
-			</div>
-
-			<div id="quevedo-images" class="tab-pane">
-
-				<h2><?php esc_html_e( 'Default images', 'quevedo' ); ?></h2>
-
-
-				<table class="form-table">
-				<tbody>
-
-				<?php
-				foreach ( $quevedo_cpts as $quevedo_cpt ) {
-					$quevedo_cpt_field_id = 'quevedo_cpt_image_' . $quevedo_cpt->name;
-					?>
-				<tr>
-					<th scope="row">
-						<?php // Translators: Post type name, plural lowercase (ex: pages, posts). ?>
-						<label for="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>"><?php echo esc_html( sprintf( __( 'Defaut image for %s', 'quevedo' ), mb_strtolower( $quevedo_cpt->label ) ) ); ?></label>
-					</th>
-					<td>
-						<input name="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>" id="<?php echo esc_attr( $quevedo_cpt_field_id ); ?>" value="<?php echo esc_attr( $quevedo_cpt->name ); ?>" class="regular-text ltr" type="text">
-						<?php // Translators: Post type name, plural lowercase (ex: pages, posts). ?>
-						<p class="description"><?php echo esc_html( sprintf( __( 'Image id or URL, %s without a featured image will use this one.', 'quevedo' ), mb_strtolower( $quevedo_cpt->label ) ) ); ?></p>
-					</td>
-				</tr>
-
-				<?php } ?>
-
-				</tbody></table>
-
-
-
-			</div>
-
-			<?php submit_button(); ?>
-
-		</form>
 
 	</div>
 
@@ -213,56 +248,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-<script>
-/*
-<a href="#quevedo-features" class="nav-tab nav-tab-active">
-<div id="quevedo-features" class="tab-pane tab-pane-active">
-*/
-(function($){
+	<script type='text/javascript'>
 
-	var active_quevedo_tab = 'quevedo-features';
-	$('.nav-tab').click(function(e){
-		e.preventDefault();
-
-		if ($(this).attr('href') == active_quevedo_tab){
-			return; // clicked already active tab
-		}
-		active_quevedo_tab = $(this).attr('href');
-
-		$('.nav-tab').removeClass('nav-tab-active');
-		$('.nav-tab[href="'+active_quevedo_tab+'"]').addClass('nav-tab-active');
-
-		$('.tab-pane').removeClass('tab-pane-active');
-		$(active_quevedo_tab).addClass('tab-pane-active');
-	});
-
-})(jQuery);
-</script>
-
-<script>
-(function($){
+		jQuery( document ).ready( function( $ ) {
 
 
-	$('#quevedo-options .quevedo-table :checkbox').change(function() {
-		// this will contain a reference to the checkbox
-		console.log(this.id); 
-		var checkBoxes = $("#quevedo-options .quevedo-table input[name=optionEnabled\\[\\]]");
 
-		if (this.id == 'quevedo_checkall_fld'){
-			if (this.checked) {
-				checkBoxes.prop("checked", true);
-			} else {
-				checkBoxes.prop("checked", false);
-				// the checkbox is now no longer checked
-			}
-		}else{
-			var checkBoxes_checked = $("#quevedo-options .quevedo-table input[name=optionEnabled\\[\\]]:checked");
-			if(checkBoxes_checked.length == checkBoxes.length){
-				$('#quevedo_checkall_fld').prop("checked", true);
-			}else{
-				$('#quevedo_checkall_fld').prop("checked", false);
-			}
-		}
-	});
-})(jQuery);
-</script>
+			// Uploading files
+			var file_frame;
+			var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+			var set_to_post_id = <?php echo intval( $quevedo_settings['thumbnail'] ); ?>; // Set this
+			var default_thumbnail = '<?php echo esc_attr( $quevedo_default_thumbnail ); ?>';
+
+			jQuery('#quevedo_upload_image_button').on('click', function( event ){
+
+				event.preventDefault();
+
+				// If the media frame already exists, reopen it.
+				if ( file_frame ) {
+					// Set the post ID to what we want
+					file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
+					// Open frame
+					file_frame.open();
+					return;
+				} else {
+					// Set the wp.media post id so the uploader grabs the ID we want when initialised
+					wp.media.model.settings.post.id = set_to_post_id;
+				}
+
+				// Create the media frame.
+				file_frame = wp.media.frames.file_frame = wp.media({
+					title: 'Select defaul image',
+					button: {
+						text: 'Use this image',
+					},
+					multiple: false	// Set to true to allow multiple files to be selected
+				});
+
+				// When an image is selected, run a callback.
+				file_frame.on( 'select', function() {
+					// We set multiple to false so only get one image from the uploader
+					attachment = file_frame.state().get('selection').first().toJSON();
+
+					// Do something with attachment.id and/or attachment.url here
+					$( '#quevedo_thumbnail_preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+					$( '#quevedo_thumbnail_id' ).val( attachment.id );
+					$( '#quevedo_remove_image_button' ).removeAttr("disabled");
+
+
+					// Restore the main post ID
+					wp.media.model.settings.post.id = wp_media_post_id;
+				});
+
+				// Finally, open the modal
+				file_frame.open();
+			});
+			jQuery('#quevedo_remove_image_button').on('click', function( event ){
+				$( '#quevedo_thumbnail_id' ).val( '0' );
+				$( '#quevedo_thumbnail_preview' ).attr( 'src', default_thumbnail );
+				$(this).prop('disabled', true);
+			});
+
+			// Restore the main ID when the add media button is pressed
+			jQuery( 'a.add_media' ).on( 'click', function() {
+				wp.media.model.settings.post.id = wp_media_post_id;
+			});
+		});
+
+	</script>

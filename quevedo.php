@@ -21,16 +21,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $quevedo_settings = array();
 
-$quevedo_options_array = array(
+$quevedo_features_array = array(
 	'disable_tags'            => array(
 		'title'       => __( 'Disable post tags', 'quevedo' ),
 		'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site.', 'quevedo' ),
 	),
+	'disable_formats'         => array(
+		'title'       => __( 'Disable post formats', 'quevedo' ),
+		'description' => __( 'If you are not using posts formats they only add clutter to the post editor', 'quevedo' ),
+	),
 	'disable_author_archives' => array(
 		'title'       => __( 'Disable author archives', 'quevedo' ),
-		'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage.', 'quevedo' ),
+		'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage. This could lead to duplicate content SEO issues.', 'quevedo' ),
 	),
-
 );
 
 add_action(
@@ -56,13 +59,28 @@ add_action(
 			);
 
 			/* Sanitization not needed, only used to check if form has been submitted */
-			if ( filter_input( INPUT_POST, 'quevedo-saved' ) !== null ) {
-				check_admin_referer( 'quevedo_save_options' );
+			if ( filter_input( INPUT_POST, 'quevedo_features_saved' ) !== null ) {
+				check_admin_referer( 'quevedo-features-save' );
 
 				/* Sanitization not needed, values are checked against a valid options array */
-				save_settings(
-					filter_input( INPUT_POST, 'optionEnabled', FILTER_DEFAULT, FILTER_FORCE_ARRAY )
+				$options = filter_input(
+					INPUT_POST,
+					'featureEnabled',
+					FILTER_DEFAULT,
+					FILTER_FORCE_ARRAY
 				);
+				save_features( $options );
+			}
+
+			if ( filter_input( INPUT_POST, 'quevedo_thumbnail_saved' ) !== null ) {
+				check_admin_referer( 'quevedo-thumbnail-save' );
+
+				$option = filter_input(
+					INPUT_POST,
+					'quevedo_thumbnail_id',
+					FILTER_VALIDATE_INT
+				);
+				save_thumbnail( $option );
 			}
 		}
 		read_settings();
@@ -71,31 +89,12 @@ add_action(
 	}
 );
 
-
-
-
-
 /**
  * Callback for the add_submenu_page function.
  */
 function submenu_page_callback() {
-	global $quevedo_settings, $quevedo_options_array;
+	global $quevedo_settings, $quevedo_features_array;
 	read_settings();
-	$all_powertools_checked = ( count( array_intersect( array_keys( $quevedo_options_array ), $quevedo_settings ) ) === count( $quevedo_options_array ) ) ? true : false;
-
-	$quevedo_cpts = get_post_types(
-		array(
-			'public' => true,
-		),
-		'objects',
-		'and'
-	);
-	foreach ( $quevedo_cpts as $quevedo_cpt ) {
-		if ( in_array( $quevedo_cpt->name, array( 'attachment', 'product' ), true ) ) {
-			unset( $quevedo_cpts[ $quevedo_cpt->name ] );
-		}
-	}
-
 	include plugin_dir_path( __FILE__ ) . 'admin-content.php';
 }
 
@@ -104,68 +103,97 @@ function submenu_page_callback() {
  */
 function read_settings() {
 	global $quevedo_settings;
-	$quevedo_settings = get_option( 'quevedo_settings', array() );
+	$quevedo_settings = array(
+		'features'  => get_option( 'quevedo_features', array() ),
+		'thumbnail' => intval( get_option( 'quevedo_thumbnail', 0 ) ),
+	);
 }
 
 /**
- * Saves options to database
+ * Saves Quevedo features options to database
  *
  * @param array $options options array, normally $_POST.
- * @param bool  $silent  prevent the function from generating admin notices.
  */
-function save_settings( $options = array(), $silent = false ) {
-	global $quevedo_settings, $quevedo_options_array;
-
+function save_features( $options = array() ) {
+	global $quevedo_settings, $quevedo_features_array;
 	if ( null === $options ) {
 		$options = array();
 	}
 
 	read_settings();
-	$options = array_intersect( $options, array_keys( $quevedo_options_array ) );
+	$valid_options = array_keys( $quevedo_features_array );
+	$options       = array_intersect( $options, $valid_options );
 
-	$num_options = count( $options );
-	if ( $num_options > 0 ) {
+	if ( count( $options ) > 0 ) {
+		$num_options = count( $options );
 		for ( $i = 0; $i < $num_options; $i++ ) {
 			$options[ $i ] = sanitize_text_field( $options[ $i ] );
 		}
-
-		if ( is_equal_array( $quevedo_settings, $options ) ) {
-			if ( ! $silent ) {
-				save_no_changes_notice();
-			}
+		if ( is_equal_array( $quevedo_settings['features'], $options ) ) {
+			save_no_changes_notice();
 			return true;
 		}
 
-		if ( update_option( 'quevedo_settings', $options ) ) {
-			$quevedo_settings = $options;
-			if ( ! $silent ) {
-				save_success_notice();
-			}
+		if ( update_option( 'quevedo_features', $options ) ) {
+			$quevedo_settings['features'] = $options;
+			save_success_notice();
 			return true;
 		} else {
-			if ( ! $silent ) {
-				save_error_notice();
-			}
+			save_error_notice();
 			return false;
 		}
-	} elseif ( count( $quevedo_settings ) > 0 ) {
-		if ( delete_option( 'quevedo_settings' ) ) {
-			$quevedo_settings = array();
-			if ( ! $silent ) {
-				save_success_notice();
-			}
+	} elseif ( count( $quevedo_settings['features'] ) > 0 ) {
+		if ( delete_option( 'quevedo_features' ) ) {
+			$quevedo_settings['features'] = array();
+			save_success_notice();
 			return true;
 		} else {
-			if ( ! $silent ) {
-				save_error_notice();
-			}
+			save_error_notice();
+			return false;
+		}
+	}
+	save_no_changes_notice();
+	return true;
+}
+
+/**
+ * Saves Quevedo thumbnails options to database
+ *
+ * @param array $option thumbnail postid.
+ */
+function save_thumbnail( $option = 0 ) {
+	global $quevedo_settings;
+	read_settings();
+
+	$option = intval( $option );
+
+	if ( 0 !== $option ) {
+		if ( $option === $quevedo_settings['thumbnail'] ) {
+			save_no_changes_notice();
+			return true;
+		}
+		if ( update_option( 'quevedo_thumbnail', $option ) ) {
+			$quevedo_settings['thumbnail'] = $option;
+			save_success_notice();
+			return true;
+		} else {
+			save_error_notice();
 			return false;
 		}
 	}
 
-	if ( ! $silent ) {
-		save_no_changes_notice();
+	if ( 0 !== $quevedo_settings['thumbnail'] ) {
+		if ( delete_option( 'quevedo_thumbnail' ) ) {
+			$quevedo_settings['thumbnail'] = null;
+			save_success_notice();
+			return true;
+		} else {
+			save_error_notice();
+			return false;
+		}
 	}
+
+	save_no_changes_notice();
 	return true;
 }
 
