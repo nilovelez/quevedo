@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * min 1, max 2000, default 100.
  * @return string shortcode HTML output.
  */
-function quevedo_lorem_function( $atts ) {
+function quevedo_lipsum_function( $atts ) {
 	$default_words = 200;
 	$max_words     = 2000;
 
@@ -47,7 +47,7 @@ function quevedo_lorem_function( $atts ) {
 
 	return $return;
 }
-add_shortcode( 'lorem', 'quevedo_lorem_function' );
+add_shortcode( 'lipsum', 'quevedo_lipsum_function' );
 
 /**
  * Shortcode to return current year in Y format
@@ -56,6 +56,6 @@ add_shortcode( 'lorem', 'quevedo_lorem_function' );
 add_shortcode(
 	'year',
 	function() {
-		return date( 'Y' );
+		return gmdate( 'Y' );
 	}
 );

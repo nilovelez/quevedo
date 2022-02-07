@@ -53,6 +53,24 @@ if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
 		100
 	);
 }
+// Redirect attachments.
+if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
+	add_action(
+		'template_redirect',
+		function() {
+			global $post;
+			if (
+				is_attachment() &&
+				isset( $post->post_parent ) &&
+				is_numeric( $post->post_parent ) &&
+				( 0 !== $post->post_parent )
+			) {
+				wp_safe_redirect( get_permalink( $post->post_parent ), 301 );
+				exit();
+			}
+		}
+	);
+}
 
 function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key, $single, $meta_type ) {
 

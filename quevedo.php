@@ -1,11 +1,13 @@
 <?php
 /**
  * Plugin Name: Quevedo
- * Description: Quevedo is a suite of tools for bloggers and content creators.
+ * Description: Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
  * Version: 0.1
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
+ * Domain Path: /languages
+
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,28 +21,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+add_action(
+	'init',
+	function() {
+		load_plugin_textdomain(
+			'quevedo',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages'
+		);
+	}
+);
+
 $quevedo_settings = array();
 
-$quevedo_features_array = array(
-	'disable_tags'            => array(
-		'title'       => __( 'Disable post tags', 'quevedo' ),
-		'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site.', 'quevedo' ),
-	),
-	'disable_formats'         => array(
-		'title'       => __( 'Disable post formats', 'quevedo' ),
-		'description' => __( 'If you are not using posts formats they only add clutter to the post editor', 'quevedo' ),
-	),
-	'disable_author_archives' => array(
-		'title'       => __( 'Disable author archives', 'quevedo' ),
-		'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage. This could lead to duplicate content SEO issues.', 'quevedo' ),
-	),
-);
+$quevedo_features_array = array();
 
 add_action(
 	'init',
 	function () {
 
-		global $quevedo_settings;
+		global $quevedo_settings, $quevedo_features_array;
+
+		$quevedo_features_array = array(
+			'disable_tags'            => array(
+				'title'       => __( 'Disable post tags', 'quevedo' ),
+				'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site.', 'quevedo' ),
+			),
+			'disable_formats'         => array(
+				'title'       => __( 'Disable post formats', 'quevedo' ),
+				'description' => __( 'If you are not using posts formats they only add clutter to the post editor', 'quevedo' ),
+			),
+			'disable_author_archives' => array(
+				'title'       => __( 'Disable author archives', 'quevedo' ),
+				'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage. This could lead to duplicate content SEO issues.', 'quevedo' ),
+			),
+			'redirect_attachments'    => array(
+				'title'       => __( 'Redirect attachment pages to parent post', 'quevedo' ),
+				'description' => __( 'WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to.', 'quevedo' ),
+			),
+		);
 
 		if ( is_admin() ) {
 			require plugin_dir_path( __FILE__ ) . 'class-notice.php';

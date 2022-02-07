@@ -12,9 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
-//$my_saved_attachment_post_id = $quevedo_settings['thumbnail'];
-$quevedo_default_thumbnail   = plugin_dir_url( __FILE__ ) . 'img/no-image.svg';
+$quevedo_default_thumbnail = plugin_dir_url( __FILE__ ) . 'img/no-image.svg';
 if ( 0 === $quevedo_settings['thumbnail'] ) {
 	$quevedo_current_thumbnail = $quevedo_default_thumbnail;
 } else {
@@ -38,7 +36,12 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 	display: inline-block;
 	width: 60px;
 	height: 34px;
-	margin-right: 15px !important;
+}
+#quevedo-table td {
+	vertical-align: top;
+}
+#quevedo-table .check-column {
+	padding-left: 0;
 }
 
 /* Hide default HTML checkbox */
@@ -70,11 +73,11 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 }
 
 #quevedo-table input:checked + .slider {
-	background-color: #2196F3;
+	background-color: #34a853;
 }
 
 #quevedo-table input:focus + .slider {
-	box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #34a853;
 }
 
 #quevedo-table input:checked + .slider:before {
@@ -145,17 +148,43 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 	max-width: 100%;
 	max-height: 200px;
 	width: auto;
+	cursor: pointer;
 }
 #quevedo_remove_image_button {
 
+}
+#quevedo-header {
+	margin-bottom: 1em;
+	position: relative;
+	min-height: 128px;
+	padding-right: 140px;
+}
+#quevedo-header:before {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	content: '';
+	width: 128px;
+	height: 128px;
+	background: url('<?php echo esc_attr( plugin_dir_url( __FILE__ ) . 'img/icon-256x256.png' ); ?>') center center no-repeat;
+	background-size: contain;
 }
 
 </style>
 
 
+<div id="quevedo-header">
+
 	<h1><?php esc_html_e( 'Quevedo writer tools', 'quevedo' ); ?></h1>
 
-	<p><?php esc_html_e( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum suscipit mi, vitae blandit eros feugiat id. Vivamus fermentum sed ligula vitae venenatis. Nunc ut vestibulum turpis. Quisque vel felis elit. Integer luctus lorem non arcu sagittis commodo. Integer at maximus elit, ut egestas ligula.', 'quevedo' ); ?></p>
+	<p><?php esc_html_e( 'WordPress was born as a small blogging tool. Over the years it has grown and now serves for many more things, but deep down there is still a lot of that little blogging tool.', 'quevedo' ); ?></p>
+	<p><?php esc_html_e( 'Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.', 'quevedo' ); ?></p>
+
+	</div>
+
+<div>
+
 	<hr class="wp-header-end">
 
 
@@ -214,13 +243,12 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 				<input type="hidden" name="quevedo_thumbnail_id" id="quevedo_thumbnail_id" value="<?php echo esc_attr( $quevedo_settings['thumbnail'] ); ?>">
 
 				<div class="quevedo-image-preview-wrapper">
-					<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>">
+					<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>" alt="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
 				</div>
-				<P>
-					<input id="quevedo_upload_image_button" type="button" class="button" value="<?php esc_attr_e( 'Choose image', 'quevedo' ); ?>">
-					<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
-				</P>
+
 				<p class="submit">
+					<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
+
 					<?php submit_button( null, 'primary', 'submit', false ); ?>
 				</p>
 			</form>
@@ -235,7 +263,7 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 				<dl id="quevedo-shortcode-list">
 					<dt>[year]</dt>
 					<dd><?php esc_html_e( 'Returns the current year in four-digit format. Very useful for copyright notices.', 'quevedo' ); ?></dd>
-					<dt>[lorem words="200"]</dt>
+					<dt>[lipsum words="200"]</dt>
 					<dd><?php esc_html_e( 'Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "words" defines the number of words, default is 200.', 'quevedo' ); ?></dd>
 				</dl>
 			</div>
@@ -246,73 +274,70 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 </div>
 
+<script type='text/javascript'>
 
-
-	<script type='text/javascript'>
-
-		jQuery( document ).ready( function( $ ) {
+	jQuery( document ).ready( function( $ ) {
 
 
 
-			// Uploading files
-			var file_frame;
-			var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-			var set_to_post_id = <?php echo intval( $quevedo_settings['thumbnail'] ); ?>; // Set this
-			var default_thumbnail = '<?php echo esc_attr( $quevedo_default_thumbnail ); ?>';
+		// Uploading files
+		var file_frame;
+		var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
+		var set_to_post_id = <?php echo intval( $quevedo_settings['thumbnail'] ); ?>; // Set this
+		var default_thumbnail = '<?php echo esc_attr( $quevedo_default_thumbnail ); ?>';
 
-			jQuery('#quevedo_upload_image_button').on('click', function( event ){
+		jQuery('#quevedo_thumbnail_preview').on('click', function( event ){
 
-				event.preventDefault();
+			event.preventDefault();
 
-				// If the media frame already exists, reopen it.
-				if ( file_frame ) {
-					// Set the post ID to what we want
-					file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
-					// Open frame
-					file_frame.open();
-					return;
-				} else {
-					// Set the wp.media post id so the uploader grabs the ID we want when initialised
-					wp.media.model.settings.post.id = set_to_post_id;
-				}
-
-				// Create the media frame.
-				file_frame = wp.media.frames.file_frame = wp.media({
-					title: 'Select defaul image',
-					button: {
-						text: 'Use this image',
-					},
-					multiple: false	// Set to true to allow multiple files to be selected
-				});
-
-				// When an image is selected, run a callback.
-				file_frame.on( 'select', function() {
-					// We set multiple to false so only get one image from the uploader
-					attachment = file_frame.state().get('selection').first().toJSON();
-
-					// Do something with attachment.id and/or attachment.url here
-					$( '#quevedo_thumbnail_preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
-					$( '#quevedo_thumbnail_id' ).val( attachment.id );
-					$( '#quevedo_remove_image_button' ).removeAttr("disabled");
-
-
-					// Restore the main post ID
-					wp.media.model.settings.post.id = wp_media_post_id;
-				});
-
-				// Finally, open the modal
+			// If the media frame already exists, reopen it.
+			if ( file_frame ) {
+				// Set the post ID to what we want
+				file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
+				// Open frame
 				file_frame.open();
-			});
-			jQuery('#quevedo_remove_image_button').on('click', function( event ){
-				$( '#quevedo_thumbnail_id' ).val( '0' );
-				$( '#quevedo_thumbnail_preview' ).attr( 'src', default_thumbnail );
-				$(this).prop('disabled', true);
+				return;
+			} else {
+				// Set the wp.media post id so the uploader grabs the ID we want when initialised
+				wp.media.model.settings.post.id = set_to_post_id;
+			}
+
+			// Create the media frame.
+			file_frame = wp.media.frames.file_frame = wp.media({
+				title: 'Select defaul image',
+				button: {
+					text: 'Use this image',
+				},
+				multiple: false	// Set to true to allow multiple files to be selected
 			});
 
-			// Restore the main ID when the add media button is pressed
-			jQuery( 'a.add_media' ).on( 'click', function() {
+			// When an image is selected, run a callback.
+			file_frame.on( 'select', function() {
+				// We set multiple to false so only get one image from the uploader
+				attachment = file_frame.state().get('selection').first().toJSON();
+
+				// Do something with attachment.id and/or attachment.url here
+				$( '#quevedo_thumbnail_preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
+				$( '#quevedo_thumbnail_id' ).val( attachment.id );
+				$( '#quevedo_remove_image_button' ).removeAttr("disabled");
+
+
+				// Restore the main post ID
 				wp.media.model.settings.post.id = wp_media_post_id;
 			});
+
+			// Finally, open the modal
+			file_frame.open();
+		});
+		jQuery('#quevedo_remove_image_button').on('click', function( event ){
+			$( '#quevedo_thumbnail_id' ).val( '0' );
+			$( '#quevedo_thumbnail_preview' ).attr( 'src', default_thumbnail );
+			$(this).prop('disabled', true);
 		});
 
-	</script>
+		// Restore the main ID when the add media button is pressed
+		jQuery( 'a.add_media' ).on( 'click', function() {
+			wp.media.model.settings.post.id = wp_media_post_id;
+		});
+	});
+</script>
