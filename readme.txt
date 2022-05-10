@@ -31,12 +31,12 @@ Select a default image for all your posts
 `[year]`
 Returns the current year in four-digit format. Very useful for copyright notices.
 
-`[lipsum words=\"200\"]`
-Returns a paragraph full of \"Lorem ipsum\" fill text. The optional attribute \"words\" defines the number of words, default is 200.
+`[lipsum words="200"]`
+Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "words" defines the number of words, default is 200.
 
 == Installation ==
 1. Upload the plugin files to the `/wp-content/plugins/quevedo` directory, or install the plugin through the WordPress plugins screen directly
-2. Activate the plugin through the \'Plugins\' screen in WordPress
+2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Configure each tool using the corresponding link on the **Tools > Quevedo** side menu
 
 == Changelog ==
