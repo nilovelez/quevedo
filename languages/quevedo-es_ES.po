@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Quevedo\n"
-"POT-Creation-Date: 2022-02-03 18:03+0100\n"
-"PO-Revision-Date: 2022-02-03 18:04+0100\n"
+"POT-Creation-Date: 2022-05-09 09:28+0200\n"
+"PO-Revision-Date: 2022-05-09 09:28+0200\n"
 "Last-Translator: Nilo Velez <nilovelez@gmail.com>\n"
 "Language-Team: Nilo Velez <nilovelez@gmail.com>\n"
 "Language: es_ES\n"
@@ -21,11 +21,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: admin-content.php:175
+#: admin-content.php:179
 msgid "Quevedo writer tools"
 msgstr "Quevedo - Herramientas para escritores"
 
-#: admin-content.php:177
+#: admin-content.php:181
 msgid ""
 "WordPress was born as a small blogging tool. Over the years it has grown and "
 "now serves for many more things, but deep down there is still a lot of that "
@@ -36,7 +36,7 @@ msgstr ""
 "mucho de esa pequeña herramienta para hacer blogs."
 
 #. Description of the plugin/theme
-#: admin-content.php:178
+#: admin-content.php:182
 msgid ""
 "Quevedo is a set of tools aimed at those authors, writers or bloggers who "
 "want to use WordPress for writing. It removes some unnecessary features for "
@@ -46,11 +46,11 @@ msgstr ""
 "want to use WordPress for writing. It removes some unnecessary features for "
 "single-author sites and improves SEO, but without complications."
 
-#: admin-content.php:191
+#: admin-content.php:195
 msgid "WordPress features"
 msgstr "Características de WordPress"
 
-#: admin-content.php:192
+#: admin-content.php:196
 msgid ""
 "Some minor theaks to make WordPress a bit more appealing to bloggers and "
 "single-user site owners."
@@ -58,23 +58,23 @@ msgstr ""
 "Algunos retoques menores para hacer que WordPress sea un poco más atractivo "
 "para los bloggers y los propietarios de sitios de un solo autor."
 
-#: admin-content.php:227
+#: admin-content.php:231
 msgid "Default post image"
 msgstr "Imagen por defecto de entradas"
 
-#: admin-content.php:242
+#: admin-content.php:246
 msgid "Select image"
 msgstr "Seleccionar imagen"
 
-#: admin-content.php:246
+#: admin-content.php:250
 msgid "Remove image"
 msgstr "Quitar imagen"
 
-#: admin-content.php:256
+#: admin-content.php:260
 msgid "Shortcodes"
 msgstr "Shortcodes"
 
-#: admin-content.php:261
+#: admin-content.php:265
 msgid ""
 "Returns the current year in four-digit format. Very useful for copyright "
 "notices."
@@ -82,7 +82,7 @@ msgstr ""
 "Devuelve el año actual en formato de cuatro dígitos. Muy útil para los "
 "avisos de copyright."
 
-#: admin-content.php:263
+#: admin-content.php:267
 msgid ""
 "Returns a paragraph full of \"Lorem ipsum\" fill text. The optional "
 "attribute \"words\" defines the number of words, default is 200."
