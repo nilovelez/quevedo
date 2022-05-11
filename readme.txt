@@ -40,5 +40,9 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 3. Configure each tool using the corresponding link on the **Tools > Quevedo** side menu
 
 == Changelog ==
+
+= 1.1 =
+* Updated the remove post formats option so its UI is not shown in the block editor.
+
 = 1.0 =
 * First Release

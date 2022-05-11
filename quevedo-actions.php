@@ -45,6 +45,7 @@ if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) 
 
 // Disable post formats.
 if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
+	add_filter( 'enable_post_format_ui', '__return_false' );
 	add_action(
 		'after_setup_theme',
 		function() {
