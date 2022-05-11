@@ -77,6 +77,21 @@ add_action(
 				}
 			);
 
+			// Add "settings" link to Quevedo in the plugin list.
+			add_filter(
+				'plugin_action_links',
+				function( $plugin_actions, $plugin_file ) {
+					$new_actions = array();
+					if ( basename( dirname( __FILE__ ) ) . '/quevedo.php' === $plugin_file ) {
+						$settings_url = esc_url( add_query_arg( array( 'page' => 'quevedo' ), admin_url( 'tools.php' ) ) );
+						$new_actions['sc_settings'] = '<a href="' . $settings_url . '">' . __( 'Settings</a>', 'quevedo' ) . '</a>';
+					}
+					return array_merge( $new_actions, $plugin_actions );
+				},
+				10,
+				2
+			);
+
 			/* Sanitization not needed, only used to check if form has been submitted */
 			if ( filter_input( INPUT_POST, 'quevedo_features_saved' ) !== null ) {
 				check_admin_referer( 'quevedo-features-save' );

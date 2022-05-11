@@ -42,7 +42,8 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 == Changelog ==
 
 = 1.1 =
-* Also remove post formats from the admin pages
+* Added "settings" link to Quevedo in the plugin list.
+* Remove post formats now also removes them from the admin pages
 
 = 1.0 =
 * First Release
