@@ -14,7 +14,7 @@ Quevedo is a suite of tools for bloggers and content creators.
 == Description ==
 WordPress was born as a small blogging tool. Over the years it has grown and now serves for many more things, but deep down there is still a lot of that little blogging tool.
 
-Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
+Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO... but without complications.
 
 = WordPress features =
 Some minor tweaks to make WordPress a bit more appealing to bloggers and single-user site owners.
