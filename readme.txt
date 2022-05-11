@@ -42,7 +42,7 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 == Changelog ==
 
 = 1.1 =
-* Updated the remove post formats option so its UI is not shown in the block editor.
+* Also remove post formats from the admin pages
 
 = 1.0 =
 * First Release
