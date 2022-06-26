@@ -5,7 +5,7 @@ Donate link: https://ko-fi.com/nilovelez
 Requires at least: 4.6
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 == Changelog ==
 
 = 1.1 =
-* Added "settings" link to Quevedo in the plugin list.
+* Added "settings" link to Quevedo settings in the plugin list.
 * Remove post formats now also removes them from the admin pages
 
 = 1.0 =

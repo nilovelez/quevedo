@@ -84,7 +84,7 @@ add_action(
 					$new_actions = array();
 					if ( basename( dirname( __FILE__ ) ) . '/quevedo.php' === $plugin_file ) {
 						$settings_url = esc_url( add_query_arg( array( 'page' => 'quevedo' ), admin_url( 'tools.php' ) ) );
-						$new_actions['sc_settings'] = '<a href="' . $settings_url . '">' . __( 'Settings</a>', 'quevedo' ) . '</a>';
+						$new_actions['sc_settings'] = '<a href="' . $settings_url . '">' . __( 'Settings', 'quevedo' ) . '</a>';
 					}
 					return array_merge( $new_actions, $plugin_actions );
 				},
