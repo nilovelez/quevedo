@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Quevedo
  * Description: Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
- * Version: 1.1
+ * Version: 1.2
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
@@ -32,16 +32,25 @@ add_action(
 	}
 );
 
+/**
+ * Global settings array for the plugin
+ *
+ * @var array
+ */
 $quevedo_settings = array();
 
+/**
+ * Global features array for the plugin
+ *
+ * @var array
+ */
 $quevedo_features_array = array();
 
 add_action(
 	'init',
 	function () {
-
 		global $quevedo_settings, $quevedo_features_array;
-
+		
 		$quevedo_features_array = array(
 			'disable_tags'            => array(
 				'title'       => __( 'Disable post tags', 'quevedo' ),
@@ -58,6 +67,10 @@ add_action(
 			'redirect_attachments'    => array(
 				'title'       => __( 'Redirect attachment pages to parent post', 'quevedo' ),
 				'description' => __( 'WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to.', 'quevedo' ),
+			),
+			'simplify_editor_blocks'  => array(
+				'title'       => __( 'Simplify editor blocks', 'quevedo' ),
+				'description' => __( 'Limits the available blocks in the editor to basic content blocks like paragraphs, headings, lists, and images.', 'quevedo' ),
 			),
 		);
 
