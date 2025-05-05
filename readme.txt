@@ -42,6 +42,9 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 
 == Changelog ==
 
+= 1.3 =
+* Compatibility checked with WordPress 6.8
+
 = 1.2 =
 * Fixed PHP 8.2+ deprecation warnings
 * Improved code documentation
