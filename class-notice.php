@@ -16,7 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Displays standar WordPress notices.
  */
 class Notice {
+	/**
+	 * The notice message to display
+	 *
+	 * @var string
+	 */
+	private $notice_message;
 
+	/**
+	 * The CSS class for the notice
+	 *
+	 * @var string
+	 */
+	private $notice_class;
 
 	/**
 	 * Displays standar WordPress dashboard notice.
@@ -26,7 +38,6 @@ class Notice {
 	 * @param bool   $dismissible determines if the notice can be dismissed via javascript.
 	 */
 	public function __construct( $message, $level = 'info', $dismissible = true ) {
-
 		$this->notice_message = $message;
 
 		if ( ! in_array( $level, array( 'error', 'warning', 'info', 'success' ), true ) ) {

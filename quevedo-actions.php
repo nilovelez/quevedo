@@ -59,6 +59,27 @@ if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
 		}
 	);
 }
+
+// Simplify editor blocks.
+if ( in_array( 'simplify_editor_blocks', $quevedo_settings['features'], true ) ) {
+	add_filter( 'allowed_block_types_all', function( $allowed_block_types, $editor_context ) {
+		// Only apply to posts
+		if ( isset( $editor_context->post ) && 'post' === $editor_context->post->post_type ) {
+			return array(
+				'core/paragraph',
+				'core/heading',
+				'core/list',
+				'core/image',
+				'core/quote',
+				'core/separator',
+				'core/code',
+				'core/preformatted'
+			);
+		}
+		return $allowed_block_types;
+	}, 10, 2 );
+}
+
 // Redirect attachments.
 if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
 	add_action(
@@ -79,7 +100,8 @@ if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
 }
 
 function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key, $single, $meta_type ) {
-
+	global $quevedo_settings;
+	
 	if ( '_thumbnail_id' !== $meta_key ) {
 		return $value;
 	}
