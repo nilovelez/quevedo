@@ -70,7 +70,7 @@ add_action(
 			),
 			'simplify_editor_blocks'  => array(
 				'title'       => __( 'Simplify editor blocks', 'quevedo' ),
-				'description' => __( 'Limits the available blocks in the editor to basic content blocks like paragraphs, headings, lists, and images.', 'quevedo' ),
+				'description' => __( 'When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted.', 'quevedo' ),
 			),
 		);
 

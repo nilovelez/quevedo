@@ -19,7 +19,7 @@ Some minor tweaks to make WordPress more appealing to bloggers and single-user s
 - **Disable post formats**: If you're not using post formats, they only add clutter to the post editor
 - **Disable author archives**: For single-user blogs, author archives are identical to the homepage, which can lead to SEO issues
 - **Redirect attachment pages**: WordPress creates individual pages for gallery images, creating thin content. This feature redirects to the parent post
-- **Simplify editor blocks**: Limits the available blocks in the editor to basic content blocks like paragraphs, headings, lists, and images
+- **Simplify editor blocks**: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
 ### Default Post Image
 Select a default image for all your posts, ensuring consistent visual presentation across your site.
@@ -49,6 +49,7 @@ Quevedo includes useful shortcodes for writers:
 - Improved code documentation
 - Added proper global variable declarations
 - Fixed dynamic property creation warnings
+- Added editor simplification: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
 ### 1.1
 - Initial release
