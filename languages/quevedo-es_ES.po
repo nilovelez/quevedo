@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Quevedo\n"
-"POT-Creation-Date: 2022-05-09 09:28+0200\n"
-"PO-Revision-Date: 2022-05-09 09:28+0200\n"
+"POT-Creation-Date: 2025-05-05 13:24+0200\n"
+"PO-Revision-Date: 2025-05-05 13:25+0200\n"
 "Last-Translator: Nilo Velez <nilovelez@gmail.com>\n"
 "Language-Team: Nilo Velez <nilovelez@gmail.com>\n"
 "Language: es_ES\n"
@@ -10,14 +10,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: quevedo.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
@@ -90,23 +89,23 @@ msgstr ""
 "Devuelve un párrafo con texto de relleno \"Lorem ipsum\". El atributo "
 "opcional \"words\" define el número de palabras, por defecto es 200."
 
-#: class-notice.php:59
+#: class-notice.php:70
 msgid "Options saved!"
 msgstr "¡Opciones guardadas!"
 
-#: class-notice.php:65
+#: class-notice.php:76
 msgid "Error saving configuration to database."
 msgstr "Error al guardar la configuración a base de datos."
 
-#: class-notice.php:71
+#: class-notice.php:82
 msgid "No changes were needed."
 msgstr "No había nada que guardar."
 
-#: quevedo.php:47
+#: quevedo.php:56
 msgid "Disable post tags"
 msgstr "Desactivar las etiquetas de entradas"
 
-#: quevedo.php:48
+#: quevedo.php:57
 msgid ""
 "If not used properly, post tags can create a lot of duplicate content in "
 "your site."
@@ -114,22 +113,22 @@ msgstr ""
 "Si no se utilizan correctamente, las etiquetas de las entradas pueden crear "
 "mucho contenido duplicado en tu sitio."
 
-#: quevedo.php:51
+#: quevedo.php:60
 msgid "Disable post formats"
 msgstr "Desactivar los formatos de entrada"
 
-#: quevedo.php:52
+#: quevedo.php:61
 msgid ""
 "If you are not using posts formats they only add clutter to the post editor"
 msgstr ""
 "Si no utilizas los formatos de entrada, sólo añaden desorden al editor de "
 "entradas"
 
-#: quevedo.php:55
+#: quevedo.php:64
 msgid "Disable author archives"
 msgstr "Desactivar los archivos de autor"
 
-#: quevedo.php:56
+#: quevedo.php:65
 msgid ""
 "If you have a single-user blog, the author archive will be exactly the same "
 "as your homepage. This could lead to duplicate content SEO issues."
@@ -138,11 +137,11 @@ msgstr ""
 "igual que tu página de inicio. Esto podría dar lugar a problemas de SEO de "
 "contenido duplicado."
 
-#: quevedo.php:59
+#: quevedo.php:68
 msgid "Redirect attachment pages to parent post"
 msgstr "Redirigir páginas de adjuntos a su entrada"
 
-#: quevedo.php:60
+#: quevedo.php:69
 msgid ""
 "WordPress creates a simgle pagle for each gallery image, creating a lot of "
 "thin content. This feature redirects the attachment page to the post the "
@@ -152,10 +151,26 @@ msgstr ""
 "un montón de contenido instancial. Esta función redirige la página de "
 "adjuntos a la entrada a la que se adjunta la imagen."
 
+#: quevedo.php:72
+msgid "Simplify editor blocks"
+msgstr "Simplificar los bloques del editor"
+
+#: quevedo.php:73
+msgid ""
+"When editing a blog post, the available blocks are reduced to: paragraph, "
+"heading, list, image, quote, separator, code, preformatted."
+msgstr ""
+"Al editar una entrada del blog, los bloques disponibles se reducen a: "
+"párrafo, encabezado, lista, imagen, cita, separador, código, preformateado."
+
 #. Plugin Name of the plugin/theme
-#: quevedo.php:71 quevedo.php:72
+#: quevedo.php:84 quevedo.php:85
 msgid "Quevedo"
 msgstr "Quevedo"
+
+#: quevedo.php:100
+msgid "Settings"
+msgstr "Ajustes"
 
 #. Author of the plugin/theme
 msgid "Nilo Velez"
