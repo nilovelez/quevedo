@@ -4,6 +4,8 @@
 
 Version 1.3
 
+Special greetings to the WordPress Sevilla community! This plugin was born thanks to the inspiring conversations and support from the local meetup.
+
 ## Description
 
 Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
