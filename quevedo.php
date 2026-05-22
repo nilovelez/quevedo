@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Quevedo
  * Description: Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
- * Version: 1.3
+ * Version: 1.4
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
@@ -46,10 +46,17 @@ $quevedo_settings = array();
  */
 $quevedo_features_array = array();
 
+/**
+ * Global featured image options array for the plugin
+ *
+ * @var array
+ */
+$quevedo_thumbnail_features_array = array();
+
 add_action(
 	'init',
 	function () {
-		global $quevedo_settings, $quevedo_features_array;
+		global $quevedo_settings, $quevedo_features_array, $quevedo_thumbnail_features_array;
 		
 		$quevedo_features_array = array(
 			'disable_tags'            => array(
@@ -64,6 +71,10 @@ add_action(
 				'title'       => __( 'Disable author archives', 'quevedo' ),
 				'description' => __( 'If you have a single-user blog, the author archive will be exactly the same as your homepage. This could lead to duplicate content SEO issues.', 'quevedo' ),
 			),
+			'disable_date_archives'   => array(
+				'title'       => __( 'Disable date archives', 'quevedo' ),
+				'description' => __( 'Date archive pages (year, month and day) can create duplicate or thin content on personal blogs. This feature redirects them to your homepage.', 'quevedo' ),
+			),
 			'redirect_attachments'    => array(
 				'title'       => __( 'Redirect attachment pages to parent post', 'quevedo' ),
 				'description' => __( 'WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to.', 'quevedo' ),
@@ -71,6 +82,13 @@ add_action(
 			'simplify_editor_blocks'  => array(
 				'title'       => __( 'Simplify editor blocks', 'quevedo' ),
 				'description' => __( 'When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted.', 'quevedo' ),
+			),
+		);
+
+		$quevedo_thumbnail_features_array = array(
+			'featured_image_og_meta' => array(
+				'title'       => __( 'Add featured image to post metadata', 'quevedo' ),
+				'description' => __( 'Outputs Open Graph and Twitter image meta tags using your featured image settings. Uses the default featured image when set; otherwise the post featured image.', 'quevedo' ),
 			),
 		);
 
@@ -122,12 +140,18 @@ add_action(
 			if ( filter_input( INPUT_POST, 'quevedo_thumbnail_saved' ) !== null ) {
 				check_admin_referer( 'quevedo-thumbnail-save' );
 
-				$option = filter_input(
+				$thumbnail_id = filter_input(
 					INPUT_POST,
 					'quevedo_thumbnail_id',
 					FILTER_VALIDATE_INT
 				);
-				save_thumbnail( $option );
+				$thumbnail_features = filter_input(
+					INPUT_POST,
+					'thumbnailFeatureEnabled',
+					FILTER_DEFAULT,
+					FILTER_FORCE_ARRAY
+				);
+				save_thumbnail_settings( $thumbnail_id, $thumbnail_features );
 			}
 		}
 		read_settings();
@@ -140,7 +164,7 @@ add_action(
  * Callback for the add_submenu_page function.
  */
 function submenu_page_callback() {
-	global $quevedo_settings, $quevedo_features_array;
+	global $quevedo_settings, $quevedo_features_array, $quevedo_thumbnail_features_array;
 	read_settings();
 	include plugin_dir_path( __FILE__ ) . 'admin-content.php';
 }
@@ -151,8 +175,9 @@ function submenu_page_callback() {
 function read_settings() {
 	global $quevedo_settings;
 	$quevedo_settings = array(
-		'features'  => get_option( 'quevedo_features', array() ),
-		'thumbnail' => intval( get_option( 'quevedo_thumbnail', 0 ) ),
+		'features'           => get_option( 'quevedo_features', array() ),
+		'thumbnail'          => intval( get_option( 'quevedo_thumbnail', 0 ) ),
+		'thumbnail_features' => get_option( 'quevedo_thumbnail_features', array() ),
 	);
 }
 
@@ -204,43 +229,82 @@ function save_features( $options = array() ) {
 }
 
 /**
- * Saves Quevedo thumbnails options to database
+ * Saves Quevedo featured image settings to database
  *
- * @param array $option thumbnail postid.
+ * @param int   $thumbnail_id       Attachment ID for the default featured image.
+ * @param array $thumbnail_features Enabled featured image option slugs.
  */
-function save_thumbnail( $option = 0 ) {
-	global $quevedo_settings;
+function save_thumbnail_settings( $thumbnail_id = 0, $thumbnail_features = array() ) {
+	global $quevedo_settings, $quevedo_thumbnail_features_array;
 	read_settings();
 
-	$option = intval( $option );
+	if ( null === $thumbnail_features ) {
+		$thumbnail_features = array();
+	}
 
-	if ( 0 !== $option ) {
-		if ( $option === $quevedo_settings['thumbnail'] ) {
-			save_no_changes_notice();
-			return true;
-		}
-		if ( update_option( 'quevedo_thumbnail', $option ) ) {
-			$quevedo_settings['thumbnail'] = $option;
-			save_success_notice();
-			return true;
-		} else {
-			save_error_notice();
-			return false;
+	$thumbnail_id       = intval( $thumbnail_id );
+	$valid_features     = array_keys( $quevedo_thumbnail_features_array );
+	$thumbnail_features = array_intersect( (array) $thumbnail_features, $valid_features );
+
+	if ( count( $thumbnail_features ) > 0 ) {
+		$num_features = count( $thumbnail_features );
+		for ( $i = 0; $i < $num_features; $i++ ) {
+			$thumbnail_features[ $i ] = sanitize_text_field( $thumbnail_features[ $i ] );
 		}
 	}
 
-	if ( 0 !== $quevedo_settings['thumbnail'] ) {
-		if ( delete_option( 'quevedo_thumbnail' ) ) {
-			$quevedo_settings['thumbnail'] = null;
-			save_success_notice();
-			return true;
+	$thumbnail_changed = false;
+	$features_changed  = ! is_equal_array( $quevedo_settings['thumbnail_features'], $thumbnail_features );
+
+	if ( 0 !== $thumbnail_id ) {
+		if ( $thumbnail_id !== $quevedo_settings['thumbnail'] ) {
+			$thumbnail_changed = true;
+		}
+	} elseif ( 0 !== $quevedo_settings['thumbnail'] ) {
+		$thumbnail_changed = true;
+	}
+
+	if ( ! $thumbnail_changed && ! $features_changed ) {
+		save_no_changes_notice();
+		return true;
+	}
+
+	$save_failed = false;
+
+	if ( $thumbnail_changed ) {
+		if ( 0 !== $thumbnail_id ) {
+			if ( ! update_option( 'quevedo_thumbnail', $thumbnail_id ) ) {
+				$save_failed = true;
+			} else {
+				$quevedo_settings['thumbnail'] = $thumbnail_id;
+			}
+		} elseif ( ! delete_option( 'quevedo_thumbnail' ) ) {
+			$save_failed = true;
 		} else {
-			save_error_notice();
-			return false;
+			$quevedo_settings['thumbnail'] = 0;
 		}
 	}
 
-	save_no_changes_notice();
+	if ( $features_changed && ! $save_failed ) {
+		if ( count( $thumbnail_features ) > 0 ) {
+			if ( ! update_option( 'quevedo_thumbnail_features', $thumbnail_features ) ) {
+				$save_failed = true;
+			} else {
+				$quevedo_settings['thumbnail_features'] = $thumbnail_features;
+			}
+		} elseif ( ! delete_option( 'quevedo_thumbnail_features' ) ) {
+			$save_failed = true;
+		} else {
+			$quevedo_settings['thumbnail_features'] = array();
+		}
+	}
+
+	if ( $save_failed ) {
+		save_error_notice();
+		return false;
+	}
+
+	save_success_notice();
 	return true;
 }
 

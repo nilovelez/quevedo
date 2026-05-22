@@ -50,7 +50,27 @@ msgid ""
 msgstr ""
 
 #: admin-content.php:231
-msgid "Default post image"
+msgid "Featured image"
+msgstr ""
+
+#: admin-content.php:232
+msgid "Options for featured images on your posts."
+msgstr ""
+
+#: admin-content.php:244
+msgid "Default featured image"
+msgstr ""
+
+#: admin-content.php:245
+msgid "Select a fallback image for posts that do not have a featured image set."
+msgstr ""
+
+#: admin-content.php:356 admin-content.php:357
+msgid "Select default image"
+msgstr ""
+
+#: admin-content.php:358 admin-content.php:359
+msgid "Use this image"
 msgstr ""
 
 #: admin-content.php:246
@@ -59,6 +79,10 @@ msgstr ""
 
 #: admin-content.php:250
 msgid "Remove image"
+msgstr ""
+
+#: admin-content.php:258
+msgid "Featured image options"
 msgstr ""
 
 #: admin-content.php:260
@@ -119,6 +143,16 @@ msgid ""
 msgstr ""
 
 #: quevedo.php:68
+msgid "Disable date archives"
+msgstr ""
+
+#: quevedo.php:69
+msgid ""
+"Date archive pages (year, month and day) can create duplicate or thin "
+"content on personal blogs. This feature redirects them to your homepage."
+msgstr ""
+
+#: quevedo.php:72
 msgid "Redirect attachment pages to parent post"
 msgstr ""
 
@@ -137,6 +171,17 @@ msgstr ""
 msgid ""
 "When editing a blog post, the available blocks are reduced to: paragraph, "
 "heading, list, image, quote, separator, code, preformatted."
+msgstr ""
+
+#: quevedo.php:89
+msgid "Add featured image to post metadata"
+msgstr ""
+
+#: quevedo.php:90
+msgid ""
+"Outputs Open Graph and Twitter image meta tags using your featured image "
+"settings. Uses the default featured image when set; otherwise the post "
+"featured image."
 msgstr ""
 
 #. Plugin Name of the plugin/theme

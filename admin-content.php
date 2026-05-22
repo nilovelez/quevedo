@@ -28,27 +28,33 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 <style>
 /* The switch - the box around the slider */
-#quevedo-table td {
+#quevedo-table td,
+#quevedo-thumbnail-table td {
 	padding-top: 0;
 }
-#quevedo-table .switch {
+#quevedo-table .switch,
+#quevedo-thumbnail-table .switch {
 	position: relative;
 	display: inline-block;
 	width: 60px;
 	height: 34px;
 }
-#quevedo-table td {
+#quevedo-table td,
+#quevedo-thumbnail-table td {
 	vertical-align: top;
 }
-#quevedo-table .check-column {
+#quevedo-table .check-column,
+#quevedo-thumbnail-table .check-column {
 	padding-left: 0;
 }
 
 /* Hide default HTML checkbox */
-#quevedo-table .switch input {display:none;}
+#quevedo-table .switch input,
+#quevedo-thumbnail-table .switch input {display:none;}
 
 /* The slider */
-#quevedo-table .slider {
+#quevedo-table .slider,
+#quevedo-thumbnail-table .slider {
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -60,7 +66,8 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 	transition: .4s;
 }
 
-#quevedo-table .slider:before {
+#quevedo-table .slider:before,
+#quevedo-thumbnail-table .slider:before {
 	position: absolute;
 	content: "";
 	height: 26px;
@@ -72,26 +79,31 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 	transition: .4s;
 }
 
-#quevedo-table input:checked + .slider {
+#quevedo-table input:checked + .slider,
+#quevedo-thumbnail-table input:checked + .slider {
 	background-color: #34a853;
 }
 
-#quevedo-table input:focus + .slider {
+#quevedo-table input:focus + .slider,
+#quevedo-thumbnail-table input:focus + .slider {
 	box-shadow: 0 0 1px #34a853;
 }
 
-#quevedo-table input:checked + .slider:before {
+#quevedo-table input:checked + .slider:before,
+#quevedo-thumbnail-table input:checked + .slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
 }
 
 /* Rounded sliders */
-#quevedo-table .slider.round {
+#quevedo-table .slider.round,
+#quevedo-thumbnail-table .slider.round {
 	border-radius: 34px;
 }
 
-#quevedo-table .slider.round:before {
+#quevedo-table .slider.round:before,
+#quevedo-thumbnail-table .slider.round:before {
 	border-radius: 50%;
 }
 
@@ -124,6 +136,16 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 }
 .quevedo-settings-card-body {
 	padding: 16px 24px 0;
+}
+.quevedo-settings-subsection {
+	margin-bottom: 24px;
+}
+.quevedo-settings-subsection h3 {
+	margin: 0 0 8px;
+}
+.quevedo-settings-subsection-description {
+	margin: 0 0 12px;
+	color: #757575;
 }
 
 
@@ -228,29 +250,57 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 		<div id="quevedo-images" class="quevedo-settings-card">
 			<div class="quevedo-settings-card-header">
-				<h2><?php esc_html_e( 'Default post image', 'quevedo' ); ?></h2>
+				<h2><?php esc_html_e( 'Featured image', 'quevedo' ); ?></h2>
+				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Options for featured images on your posts.', 'quevedo' ); ?></p>
 			</div>
 
 			<div class="quevedo-settings-card-body">
 
 			<?php wp_enqueue_media(); ?>
 
-
 			<form id="quevedo-thumbnail-form" action="" method="POST">
 				<input type="hidden" name="quevedo_thumbnail_saved" value="true">
 				<?php wp_nonce_field( 'quevedo-thumbnail-save' ); ?>
 
-				<input type="hidden" name="quevedo_thumbnail_id" id="quevedo_thumbnail_id" value="<?php echo esc_attr( $quevedo_settings['thumbnail'] ); ?>">
+				<div class="quevedo-settings-subsection">
+					<h3><?php esc_html_e( 'Default featured image', 'quevedo' ); ?></h3>
+					<p class="quevedo-settings-subsection-description"><?php esc_html_e( 'Select a fallback image for posts that do not have a featured image set.', 'quevedo' ); ?></p>
 
-				<div class="quevedo-image-preview-wrapper">
-					<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>" alt="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
+					<input type="hidden" name="quevedo_thumbnail_id" id="quevedo_thumbnail_id" value="<?php echo esc_attr( $quevedo_settings['thumbnail'] ); ?>">
+
+					<div class="quevedo-image-preview-wrapper">
+						<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>" alt="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
+					</div>
+
+					<p>
+						<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
+					</p>
 				</div>
 
-				<p class="submit">
-					<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
+				<div class="quevedo-settings-subsection">
+					<h3><?php esc_html_e( 'Featured image options', 'quevedo' ); ?></h3>
 
-					<?php submit_button( null, 'primary', 'submit', false ); ?>
-				</p>
+					<table class="form-table" id="quevedo-thumbnail-table">
+					<tbody>
+					<?php foreach ( $quevedo_thumbnail_features_array as $quevedo_thumbnail_feature_slug => $quevedo_thumbnail_feature ) { ?>
+						<tr>
+						<td class="check-column">
+							<fieldset>
+								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></span></legend>
+								<label class="switch">
+									<input type="checkbox" name="thumbnailFeatureEnabled[]" value="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_thumbnail_feature_slug, $quevedo_settings['thumbnail_features'], true ), true ); ?>>
+									<span class="slider round"></span>
+								</label>
+							</fieldset>
+						</td><td>
+							<strong><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_thumbnail_feature['description'] ); ?>
+						</td></tr>
+					<?php } ?>
+					</tbody>
+					</table>
+				</div>
+
+				<?php submit_button(); ?>
 			</form>
 			</div>
 		</div>
@@ -277,67 +327,78 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 <script type='text/javascript'>
 
 	jQuery( document ).ready( function( $ ) {
-
-
-
-		// Uploading files
 		var file_frame;
-		var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-		var set_to_post_id = <?php echo intval( $quevedo_settings['thumbnail'] ); ?>; // Set this
+		var wp_media_post_id = wp.media.view.settings.post.id;
 		var default_thumbnail = '<?php echo esc_attr( $quevedo_default_thumbnail ); ?>';
 
-		jQuery('#quevedo_thumbnail_preview').on('click', function( event ){
+		function quevedoRestoreMediaPostId() {
+			wp.media.view.settings.post.id = wp_media_post_id;
+			wp.media.model.settings.post.id = wp_media_post_id;
+		}
 
-			event.preventDefault();
+		function quevedoPrepareMediaUploader( frame ) {
+			wp.media.view.settings.post.id = 0;
+			wp.media.model.settings.post.id = 0;
 
-			// If the media frame already exists, reopen it.
-			if ( file_frame ) {
-				// Set the post ID to what we want
-				file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
-				// Open frame
-				file_frame.open();
+			if ( ! frame || ! frame.uploader || ! frame.uploader.uploader || ! frame.uploader.uploader.uploader ) {
 				return;
-			} else {
-				// Set the wp.media post id so the uploader grabs the ID we want when initialised
-				wp.media.model.settings.post.id = set_to_post_id;
 			}
 
-			// Create the media frame.
-			file_frame = wp.media.frames.file_frame = wp.media({
-				title: 'Select defaul image',
+			delete frame.uploader.uploader.uploader.settings.multipart_params.post_id;
+		}
+
+		jQuery( '#quevedo_thumbnail_preview' ).on( 'click', function( event ) {
+			event.preventDefault();
+
+			if ( file_frame ) {
+				quevedoPrepareMediaUploader( file_frame );
+				file_frame.open();
+				return;
+			}
+
+			file_frame = wp.media( {
+				title: '<?php echo esc_js( __( 'Select default image', 'quevedo' ) ); ?>',
 				button: {
-					text: 'Use this image',
+					text: '<?php echo esc_js( __( 'Use this image', 'quevedo' ) ); ?>',
 				},
-				multiple: false	// Set to true to allow multiple files to be selected
-			});
+				library: {
+					type: 'image',
+				},
+				multiple: false,
+			} );
 
-			// When an image is selected, run a callback.
+			file_frame.on( 'open', function() {
+				quevedoPrepareMediaUploader( file_frame );
+
+				if ( file_frame.uploader && file_frame.uploader.uploader ) {
+					$( file_frame.uploader.uploader ).off( 'uploader:ready.quevedo' ).on( 'uploader:ready.quevedo', function() {
+						quevedoPrepareMediaUploader( file_frame );
+					} );
+				}
+			} );
+
 			file_frame.on( 'select', function() {
-				// We set multiple to false so only get one image from the uploader
-				attachment = file_frame.state().get('selection').first().toJSON();
+				var attachment = file_frame.state().get( 'selection' ).first().toJSON();
 
-				// Do something with attachment.id and/or attachment.url here
 				$( '#quevedo_thumbnail_preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
 				$( '#quevedo_thumbnail_id' ).val( attachment.id );
-				$( '#quevedo_remove_image_button' ).removeAttr("disabled");
+				$( '#quevedo_remove_image_button' ).prop( 'disabled', false );
 
+				quevedoRestoreMediaPostId();
+			} );
 
-				// Restore the main post ID
-				wp.media.model.settings.post.id = wp_media_post_id;
-			});
+			file_frame.on( 'close', function() {
+				quevedoRestoreMediaPostId();
+			} );
 
-			// Finally, open the modal
+			quevedoPrepareMediaUploader( file_frame );
 			file_frame.open();
-		});
-		jQuery('#quevedo_remove_image_button').on('click', function( event ){
+		} );
+
+		jQuery( '#quevedo_remove_image_button' ).on( 'click', function() {
 			$( '#quevedo_thumbnail_id' ).val( '0' );
 			$( '#quevedo_thumbnail_preview' ).attr( 'src', default_thumbnail );
-			$(this).prop('disabled', true);
-		});
-
-		// Restore the main ID when the add media button is pressed
-		jQuery( 'a.add_media' ).on( 'click', function() {
-			wp.media.model.settings.post.id = wp_media_post_id;
-		});
-	});
+			$( this ).prop( 'disabled', true );
+		} );
+	} );
 </script>

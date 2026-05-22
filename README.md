@@ -2,7 +2,7 @@
 
 # Quevedo
 
-Version 1.3
+Version 1.4
 
 ## Description
 
@@ -18,11 +18,15 @@ Some minor tweaks to make WordPress more appealing to bloggers and single-user s
 - **Disable post tags**: If not used properly, post tags can create a lot of duplicate content in your site
 - **Disable post formats**: If you're not using post formats, they only add clutter to the post editor
 - **Disable author archives**: For single-user blogs, author archives are identical to the homepage, which can lead to SEO issues
+- **Disable date archives**: Redirects year, month and day archive pages to the homepage to avoid duplicate or thin content
 - **Redirect attachment pages**: WordPress creates individual pages for gallery images, creating thin content. This feature redirects to the parent post
 - **Simplify editor blocks**: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
-### Default Post Image
-Select a default image for all your posts, ensuring consistent visual presentation across your site.
+### Featured image
+Options for featured images on your posts:
+
+- **Default featured image**: Fallback image for posts without a featured image set
+- **Add featured image to post metadata**: Outputs Open Graph and Twitter image meta tags. Uses the default featured image when set; otherwise the post featured image
 
 ### Shortcodes
 Quevedo includes useful shortcodes for writers:
@@ -32,9 +36,9 @@ Quevedo includes useful shortcodes for writers:
 
 ## Requirements
 
-- WordPress 4.6 or higher
+- WordPress 5.9 or higher
 - PHP 7.0 or higher
-- Tested up to WordPress 6.8
+- Tested up to WordPress 7.0 and PHP 8.4
 
 ## Installation
 
@@ -43,6 +47,13 @@ Quevedo includes useful shortcodes for writers:
 3. Configure each tool using the corresponding link on the **Tools > Quevedo** side menu
 
 ## Changelog
+
+### 1.4
+- Compatibility tested with WordPress 7.0 and PHP 8.4
+- Added disable date archives feature
+- Featured image settings reorganized as a collection of options
+- Added Open Graph and Twitter image metadata option for posts
+- Fixed featured image media uploader on the settings page
 
 ### 1.3
 - Compatibility checked with WordPress 6.8

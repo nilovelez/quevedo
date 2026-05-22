@@ -14,3 +14,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 delete_option( 'quevedo_features' );
 delete_option( 'quevedo_thumbnail' );
+delete_option( 'quevedo_thumbnail_features' );

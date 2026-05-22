@@ -58,8 +58,28 @@ msgstr ""
 "para los bloggers y los propietarios de sitios de un solo autor."
 
 #: admin-content.php:231
-msgid "Default post image"
-msgstr "Imagen por defecto de entradas"
+msgid "Featured image"
+msgstr "Imagen destacada"
+
+#: admin-content.php:232
+msgid "Options for featured images on your posts."
+msgstr "Opciones de imagen destacada para tus entradas."
+
+#: admin-content.php:244
+msgid "Default featured image"
+msgstr "Imagen destacada por defecto"
+
+#: admin-content.php:245
+msgid "Select a fallback image for posts that do not have a featured image set."
+msgstr "Selecciona una imagen de respaldo para las entradas que no tengan imagen destacada."
+
+#: admin-content.php:356 admin-content.php:357
+msgid "Select default image"
+msgstr "Seleccionar imagen por defecto"
+
+#: admin-content.php:358 admin-content.php:359
+msgid "Use this image"
+msgstr "Usar esta imagen"
 
 #: admin-content.php:246
 msgid "Select image"
@@ -68,6 +88,10 @@ msgstr "Seleccionar imagen"
 #: admin-content.php:250
 msgid "Remove image"
 msgstr "Quitar imagen"
+
+#: admin-content.php:258
+msgid "Featured image options"
+msgstr "Opciones de imagen destacada"
 
 #: admin-content.php:260
 msgid "Shortcodes"
@@ -138,6 +162,19 @@ msgstr ""
 "contenido duplicado."
 
 #: quevedo.php:68
+msgid "Disable date archives"
+msgstr "Desactivar los archivos por fecha"
+
+#: quevedo.php:69
+msgid ""
+"Date archive pages (year, month and day) can create duplicate or thin "
+"content on personal blogs. This feature redirects them to your homepage."
+msgstr ""
+"Las páginas de archivo por fecha (año, mes y día) pueden crear contenido "
+"duplicado o superficial en blogs personales. Esta función las redirige a tu "
+"página de inicio."
+
+#: quevedo.php:72
 msgid "Redirect attachment pages to parent post"
 msgstr "Redirigir páginas de adjuntos a su entrada"
 
@@ -162,6 +199,20 @@ msgid ""
 msgstr ""
 "Al editar una entrada del blog, los bloques disponibles se reducen a: "
 "párrafo, encabezado, lista, imagen, cita, separador, código, preformateado."
+
+#: quevedo.php:89
+msgid "Add featured image to post metadata"
+msgstr "Añadir imagen destacada a los metadatos de la entrada"
+
+#: quevedo.php:90
+msgid ""
+"Outputs Open Graph and Twitter image meta tags using your featured image "
+"settings. Uses the default featured image when set; otherwise the post "
+"featured image."
+msgstr ""
+"Añade la imagen destacada a los metadatos Open Graph y Twitter. Usa la "
+"imagen destacada por defecto si está configurada; si no, la imagen "
+"destacada de la entrada."
 
 #. Plugin Name of the plugin/theme
 #: quevedo.php:84 quevedo.php:85

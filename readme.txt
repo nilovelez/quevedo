@@ -1,9 +1,9 @@
 === Quevedo ===
 Contributors: nilovelez
 Tags: writing, blogging, seo, content
-Requires at least: 4.6
-Tested up to: 6.8
-Stable tag: 1.3
+Requires at least: 5.9
+Tested up to: 7.0
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,11 +21,15 @@ Some minor tweaks to make WordPress a bit more appealing to bloggers and single-
 * Disable post tags: Prevents duplicate content
 * Disable post formats: Removes clutter from the post editor
 * Disable author archives: Avoids SEO issues for single-author blogs
+* Disable date archives: Redirects year, month and day archive pages to the homepage
 * Redirect attachment pages: Prevents thin content by redirecting to the parent post
 * Simplify editor blocks: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
-= Default post image =
-Select a default image for all your posts
+= Featured image =
+Options for featured images on your posts.
+
+* Default featured image: Fallback image for posts without a featured image set
+* Add featured image to post metadata: Outputs Open Graph and Twitter image meta tags using the default featured image when set, otherwise the post featured image
 
 = Shortcodes =
 `[year]`
@@ -41,6 +45,13 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 3. Configure each tool using the corresponding link on the Tools > Quevedo side menu
 
 == Changelog ==
+
+= 1.4 =
+* Compatibility tested with WordPress 7.0 and PHP 8.4
+* Added disable date archives feature
+* Featured image settings reorganized as a collection of options
+* Added Open Graph and Twitter image metadata option for posts
+* Fixed featured image media uploader on the settings page
 
 = 1.3 =
 * Compatibility checked with WordPress 6.8
