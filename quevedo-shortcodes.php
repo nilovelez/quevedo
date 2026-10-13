@@ -55,7 +55,7 @@ add_shortcode( 'lipsum', 'quevedo_lipsum_function' );
  */
 add_shortcode(
 	'year',
-	function() {
+	function () {
 		return gmdate( 'Y' );
 	}
 );

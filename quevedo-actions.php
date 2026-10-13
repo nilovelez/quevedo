@@ -25,7 +25,7 @@ if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) 
 	remove_filter( 'template_redirect', 'redirect_canonical' );
 	add_action(
 		'template_redirect',
-		function() {
+		function () {
 			if ( is_author() ) {
 				wp_safe_redirect( home_url(), 301 );
 				exit();
@@ -36,7 +36,7 @@ if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) 
 	);
 	add_filter(
 		'author_link',
-		function() {
+		function () {
 			return home_url();
 		},
 		99
@@ -49,7 +49,7 @@ if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) 
 	remove_filter( 'template_redirect', 'redirect_canonical' );
 	add_action(
 		'template_redirect',
-		function() {
+		function () {
 			if ( is_date() ) {
 				wp_safe_redirect( home_url(), 301 );
 				exit();
@@ -61,7 +61,7 @@ if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) 
 	foreach ( array( 'day_link', 'month_link', 'year_link' ) as $quevedo_date_link_filter ) {
 		add_filter(
 			$quevedo_date_link_filter,
-			function() {
+			function () {
 				return home_url();
 			},
 			99
@@ -73,14 +73,14 @@ if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) 
 if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
 	add_action(
 		'after_setup_theme',
-		function() {
+		function () {
 			remove_theme_support( 'post-formats' );
 		},
 		100
 	);
 	add_action(
 		'admin_init',
-		function() {
+		function () {
 			remove_theme_support( 'post-formats' );
 		}
 	);
@@ -88,29 +88,34 @@ if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
 
 // Simplify editor blocks.
 if ( in_array( 'simplify_editor_blocks', $quevedo_settings['features'], true ) ) {
-	add_filter( 'allowed_block_types_all', function( $allowed_block_types, $editor_context ) {
-		// Only apply to posts
-		if ( isset( $editor_context->post ) && 'post' === $editor_context->post->post_type ) {
-			return array(
-				'core/paragraph',
-				'core/heading',
-				'core/list',
-				'core/image',
-				'core/quote',
-				'core/separator',
-				'core/code',
-				'core/preformatted'
-			);
-		}
-		return $allowed_block_types;
-	}, 10, 2 );
+	add_filter(
+		'allowed_block_types_all',
+		function ( $allowed_block_types, $editor_context ) {
+			// Only apply to posts.
+			if ( isset( $editor_context->post ) && 'post' === $editor_context->post->post_type ) {
+				return array(
+					'core/paragraph',
+					'core/heading',
+					'core/list',
+					'core/image',
+					'core/quote',
+					'core/separator',
+					'core/code',
+					'core/preformatted',
+				);
+			}
+			return $allowed_block_types;
+		},
+		10,
+		2
+	);
 }
 
 // Redirect attachments.
 if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
 	add_action(
 		'template_redirect',
-		function() {
+		function () {
 			global $post;
 			if (
 				is_attachment() &&
@@ -125,13 +130,22 @@ if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
 	);
 }
 
-function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key, $single, $meta_type ) {
-	global $quevedo_settings;
-	
+/**
+ * Uses the default featured image for posts that don't have one.
+ *
+ * Callback for the default_post_metadata filter, which runs when a post has
+ * no value for the requested meta key.
+ *
+ * @param mixed  $value     The value to return, null by default.
+ * @param int    $object_id Post ID.
+ * @param string $meta_key  Meta key.
+ * @return mixed Default featured image ID for posts, otherwise $value.
+ */
+function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key ) {
 	if ( '_thumbnail_id' !== $meta_key ) {
 		return $value;
 	}
-	// Pillo el CPT de $object_id .
+	// Only posts use the default featured image.
 	$post_type = get_post_type( $object_id );
 	if ( 'post' !== $post_type ) {
 		return $value;
@@ -145,7 +159,7 @@ function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key, $si
 	}
 	return $value;
 }
-add_filter( 'default_post_metadata', __NAMESPACE__ . '\default_post_metadata__thumbnail_id', 10, 5 );
+add_filter( 'default_post_metadata', __NAMESPACE__ . '\default_post_metadata__thumbnail_id', 10, 3 );
 
 /**
  * Returns the attachment ID to use as a post featured image.
@@ -178,7 +192,7 @@ function get_post_featured_image_attachment_id( $post_id ) {
 if ( in_array( 'featured_image_og_meta', $quevedo_settings['thumbnail_features'], true ) ) {
 	add_action(
 		'wp_head',
-		function() {
+		function () {
 			if ( ! is_singular( 'post' ) ) {
 				return;
 			}

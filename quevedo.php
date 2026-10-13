@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action(
 	'init',
-	function() {
+	function () {
 		load_plugin_textdomain(
 			'quevedo',
 			false,
@@ -57,7 +57,7 @@ add_action(
 	'init',
 	function () {
 		global $quevedo_settings, $quevedo_features_array, $quevedo_thumbnail_features_array;
-		
+
 		$quevedo_features_array = array(
 			'disable_tags'            => array(
 				'title'       => __( 'Disable post tags', 'quevedo' ),
@@ -94,6 +94,7 @@ add_action(
 
 		if ( is_admin() ) {
 			require plugin_dir_path( __FILE__ ) . 'class-notice.php';
+			require plugin_dir_path( __FILE__ ) . 'notice-functions.php';
 			add_action(
 				'admin_menu',
 				function () {
@@ -111,10 +112,10 @@ add_action(
 			// Add "settings" link to Quevedo in the plugin list.
 			add_filter(
 				'plugin_action_links',
-				function( $plugin_actions, $plugin_file ) {
+				function ( $plugin_actions, $plugin_file ) {
 					$new_actions = array();
-					if ( basename( dirname( __FILE__ ) ) . '/quevedo.php' === $plugin_file ) {
-						$settings_url = esc_url( add_query_arg( array( 'page' => 'quevedo' ), admin_url( 'tools.php' ) ) );
+					if ( basename( __DIR__ ) . '/quevedo.php' === $plugin_file ) {
+						$settings_url               = esc_url( add_query_arg( array( 'page' => 'quevedo' ), admin_url( 'tools.php' ) ) );
 						$new_actions['sc_settings'] = '<a href="' . $settings_url . '">' . __( 'Settings', 'quevedo' ) . '</a>';
 					}
 					return array_merge( $new_actions, $plugin_actions );
@@ -140,7 +141,7 @@ add_action(
 			if ( filter_input( INPUT_POST, 'quevedo_thumbnail_saved' ) !== null ) {
 				check_admin_referer( 'quevedo-thumbnail-save' );
 
-				$thumbnail_id = filter_input(
+				$thumbnail_id       = filter_input(
 					INPUT_POST,
 					'quevedo_thumbnail_id',
 					FILTER_VALIDATE_INT
