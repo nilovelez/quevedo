@@ -1,6 +1,6 @@
 ---
 estado: activo
-siguiente_paso: Aprobar la rama fix/phpcs y elegir el siguiente hito del BACKLOG.md
+siguiente_paso: Decidir qué entra en el hito 1.5 (rama release/1.5) a partir del BACKLOG.md
 bloqueo: ""
 actualizado: 2026-10-13
 ---
@@ -11,6 +11,7 @@ Plugin de WordPress publicado en WordPress.org; la última versión es la 1.4 (2
 
 ## Diario
 
+- 2026-10-13: hito 1.5 abierto en la rama release/1.5; su changelog recoge la limpieza de WPCS.
 - 2026-10-13: código limpio de WPCS (composer lint sin avisos) y probado en Playground (rama fix/phpcs, sin fusionar).
 - 2026-10-13: PHPCS configurado con el estándar WordPress completo, prefijo y text domain `quevedo` y `composer lint` (rama chore/phpcs-setup, sin fusionar). Quedan 28 avisos en el código.
 - 2026-10-13: backlog con lo que hay que reparar en BACKLOG.md; el blueprint de Playground, fusionado en master.

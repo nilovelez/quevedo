@@ -74,6 +74,9 @@ git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
 
 ## Changelog
 
+### 1.5 (in development)
+- Code cleanup to follow the WordPress Coding Standards, with no changes in behavior
+
 ### 1.4
 - Compatibility tested with WordPress 7.0 and PHP 8.4
 - Added disable date archives feature
