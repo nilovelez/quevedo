@@ -2,7 +2,7 @@
 
 # Quevedo
 
-Version 1.4
+Version 1.5
 
 Special greetings to the WordPress Sevilla community! This plugin was born thanks to the inspiring conversations and support from the local meetup.
 
@@ -65,7 +65,7 @@ composer fix     # fix what can be fixed automatically
 The release zip is built with `git archive` from the repository root:
 
 ```sh
-git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
+git archive --format=zip --prefix=quevedo/ -o quevedo-1.5.zip HEAD
 ```
 
 - `--prefix` puts the files inside a `quevedo/` folder, as WordPress expects when uploading a plugin zip. The zip file name includes the version, but the folder inside does not.
@@ -74,7 +74,7 @@ git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
 
 ## Changelog
 
-### 1.5 (in development)
+### 1.5
 - Fixed lists in the simplified editor: pressing Enter now adds a new list item
 - Fixed the Open Graph and Twitter image: the post featured image now takes priority over the default featured image
 - Fixed the [lipsum] shortcode with invalid word counts, which now fall back to the default of 200 words

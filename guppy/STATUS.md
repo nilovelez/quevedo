@@ -1,16 +1,17 @@
 ---
 estado: activo
-siguiente_paso: Aprobar la rama chore/remove-bundled-translations; después, pruebas reales en Studio, subir la versión a 1.5 y publicarla
+siguiente_paso: Publicar la 1.5 en WordPress.org (SVN)
 bloqueo: ""
 actualizado: 2026-10-13
 ---
 
 # Estado
 
-Plugin de WordPress publicado en WordPress.org; la última versión publicada es la 1.4 (2026-05-22). Los cambios de la 1.5 están en master, sin publicar todavía: fallos del análisis, seguridad, accesibilidad y PHP 8.2. El código pasa WPCS y Plugin Check sin errores.
+Plugin de WordPress publicado en WordPress.org. La 1.5 está publicada en GitHub (etiqueta v1.5) y pendiente de subir a WordPress.org: fallos del análisis, seguridad, accesibilidad, PHP 8.2 y traducciones solo desde translate.wordpress.org. El código pasa WPCS y Plugin Check sin errores.
 
 ## Diario
 
+- 2026-10-13: versión 1.5 publicada en GitHub (etiqueta v1.5), probada en Studio con WordPress 7.1.3.
 - 2026-10-13: hito 1.5 fusionado en master. Plugin Check sin errores en el sitio de Studio (Studio/quevedo); su único aviso (load_plugin_textdomain) se resuelve quitando las traducciones incluidas, que ya llegan de translate.wordpress.org (rama chore/remove-bundled-translations, sin fusionar).
 - 2026-10-13: hito 1.5: etiquetas ocultas y redirigidas, páginas de adjunto con el ajuste de WordPress, una sola redirección, imagen por defecto solo en la web, botón «Select image», interruptores accesibles, erratas (cadenas nuevas sin traducir), PHP 8.2 y Tested up to 7.1.
 - 2026-10-13: hito 1.5: corregidos los cuatro fallos (listas, og:image, [lipsum], formatos), comprobación de permisos al guardar, escapado y CSS/JS encolados en admin/. Probado en Playground.

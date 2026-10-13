@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Quevedo
  * Description: Quevedo is a set of tools aimed at those authors, writers or bloggers who want to use WordPress for writing. It removes some unnecessary features for single-author sites and improves SEO, but without complications.
- * Version: 1.4
+ * Version: 1.5
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin version, used to refresh the cached admin files. Keep it in sync with the header.
  */
-const VERSION = '1.4';
+const VERSION = '1.5';
 
 /**
  * Global settings array for the plugin
