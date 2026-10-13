@@ -50,6 +50,16 @@ Quevedo includes useful shortcodes for writers:
 
 ## Development
 
+### Coding standards
+
+The code follows the [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards), configured in `phpcs.xml.dist`. Install the development tools with Composer and run the checks from the repository root:
+
+```sh
+composer install
+composer lint    # report
+composer fix     # fix what can be fixed automatically
+```
+
 ### Building the release zip
 
 The release zip is built with `git archive` from the repository root:

@@ -30,8 +30,7 @@ Known issues and pending work, found while analyzing and testing Quevedo 1.4 in 
 
 ## Code standards and tooling
 
-- **WPCS.** 150 violations (146 errors, 4 warnings); `phpcbf` fixes 142 of them, mostly spacing.
-- **`phpcs.xml` is the generic example ruleset.** Replace it with a `phpcs.xml.dist` for Quevedo (text domain, prefix, minimum WordPress version), add a `composer.json` with WPCS and `composer lint` / `composer fix`, and add them to `.gitattributes` as `export-ignore`.
+- **WPCS.** `composer lint` reports 28 violations (24 errors, 4 warnings); `composer fix` fixes 23 of them, mostly spacing.
 - **Plugin header.** Add `Requires at least` and `Requires PHP` to `quevedo.php`.
 - **Typos in user-facing strings.** "simgle pagle", "theaks", "posts formats", and "standar" in comments. Fixing them changes the translatable strings, so update the `.pot` and the Spanish translation too.
 
