@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="Quevedo">
+	<description>WordPress Coding Standards for Quevedo.</description>
+
+	<file>.</file>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<!-- Translation files generated with `wp i18n make-php`. -->
+	<exclude-pattern>/languages/*.l10n.php</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<rule ref="WordPress"/>
+
+	<config name="minimum_wp_version" value="5.9"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="quevedo"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="quevedo"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>
