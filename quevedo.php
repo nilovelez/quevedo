@@ -7,6 +7,8 @@
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
  * Domain Path: /languages
+ * Requires at least: 5.9
+ * Requires PHP: 8.2
 
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -66,11 +68,11 @@ add_action(
 		$quevedo_features_array = array(
 			'disable_tags'            => array(
 				'title'       => __( 'Disable post tags', 'quevedo' ),
-				'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site.', 'quevedo' ),
+				'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site. This feature hides them and redirects tag archives to your homepage.', 'quevedo' ),
 			),
 			'disable_formats'         => array(
 				'title'       => __( 'Disable post formats', 'quevedo' ),
-				'description' => __( 'If you are not using posts formats they only add clutter to the post editor', 'quevedo' ),
+				'description' => __( 'If you are not using post formats, they only add clutter to the post editor.', 'quevedo' ),
 			),
 			'disable_author_archives' => array(
 				'title'       => __( 'Disable author archives', 'quevedo' ),
@@ -81,8 +83,8 @@ add_action(
 				'description' => __( 'Date archive pages (year, month and day) can create duplicate or thin content on personal blogs. This feature redirects them to your homepage.', 'quevedo' ),
 			),
 			'redirect_attachments'    => array(
-				'title'       => __( 'Redirect attachment pages to parent post', 'quevedo' ),
-				'description' => __( 'WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to.', 'quevedo' ),
+				'title'       => __( 'Disable attachment pages', 'quevedo' ),
+				'description' => __( 'WordPress can create a page for each uploaded file, which adds a lot of thin content. This feature redirects those pages to the file itself, as WordPress does by default on sites created with version 6.4 or later.', 'quevedo' ),
 			),
 			'simplify_editor_blocks'  => array(
 				'title'       => __( 'Simplify editor blocks', 'quevedo' ),

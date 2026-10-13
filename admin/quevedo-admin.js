@@ -24,7 +24,7 @@ jQuery( document ).ready( function( $ ) {
 		delete frame.uploader.uploader.uploader.settings.multipart_params.post_id;
 	}
 
-	jQuery( '#quevedo_thumbnail_preview' ).on( 'click', function( event ) {
+	jQuery( '#quevedo_thumbnail_preview, #quevedo_select_image_button' ).on( 'click', function( event ) {
 		event.preventDefault();
 
 		if ( file_frame ) {

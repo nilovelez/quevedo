@@ -17,11 +17,11 @@ WordPress was born as a small blogging tool. Over the years it has grown and now
 ### WordPress Tweaks
 Some minor tweaks to make WordPress more appealing to bloggers and single-user site owners:
 
-- **Disable post tags**: If not used properly, post tags can create a lot of duplicate content in your site
+- **Disable post tags**: If not used properly, post tags can create a lot of duplicate content in your site. This feature hides them and redirects tag archives to the homepage
 - **Disable post formats**: If you're not using post formats, they only add clutter to the post editor
 - **Disable author archives**: For single-user blogs, author archives are identical to the homepage, which can lead to SEO issues
 - **Disable date archives**: Redirects year, month and day archive pages to the homepage to avoid duplicate or thin content
-- **Redirect attachment pages**: WordPress creates individual pages for gallery images, creating thin content. This feature redirects to the parent post
+- **Disable attachment pages**: WordPress can create a page for each uploaded file, creating thin content. This feature redirects those pages to the file itself, as WordPress does by default on sites created with version 6.4 or later
 - **Simplify editor blocks**: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
 ### Featured image
@@ -39,8 +39,8 @@ Quevedo includes useful shortcodes for writers:
 ## Requirements
 
 - WordPress 5.9 or higher
-- PHP 7.0 or higher
-- Tested up to WordPress 7.0 and PHP 8.4
+- PHP 8.2 or higher
+- Tested up to WordPress 7.1
 
 ## Installation
 
@@ -82,6 +82,15 @@ git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
 - Settings can only be saved by users allowed to manage options
 - The settings page styles and scripts are now separate files, loaded only on that page
 - Improved output escaping on the settings page
+- "Disable post tags" now also hides existing tags on the site, in feeds and in the sitemap, and redirects tag archives to the homepage
+- "Redirect attachment pages" is now "Disable attachment pages": it redirects attachment pages to the file, using the setting WordPress added in version 6.4
+- Author, date and tag archives now redirect to the homepage in a single step
+- The default featured image is no longer shown in the editor as if the post had it; it is only used on the site
+- Added a "Select image" button for the default featured image
+- The settings switches can now be used with the keyboard and screen readers
+- Fixed typos in the settings page
+- Requires WordPress 5.9 and PHP 8.2
+- Tested up to WordPress 7.1
 - Code cleanup to follow the WordPress Coding Standards, with no changes in behavior
 
 ### 1.4

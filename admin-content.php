@@ -45,7 +45,7 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 			<div class="quevedo-settings-card-header">
 				<h2><?php esc_html_e( 'WordPress features', 'quevedo' ); ?></h2>
-				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Some minor theaks to make WordPress a bit more appealing to bloggers and single-user site owners.', 'quevedo' ); ?></p>
+				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Some minor tweaks to make WordPress a bit more appealing to bloggers and single-user site owners.', 'quevedo' ); ?></p>
 			</div>
 			<div class="quevedo-settings-card-body">
 				<form id="quevedo-features-form" action="" method="POST">
@@ -58,15 +58,13 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					<?php foreach ( $quevedo_features_array as $quevedo_feature_slug => $quevedo_feature ) { ?>
 						<tr>
 						<td class="check-column">
-							<fieldset>
-								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_feature['title'] ); ?></span></legend>
-								<label class="switch">
-									<input type="checkbox" name="featureEnabled[]" value="<?php echo esc_attr( $quevedo_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_feature_slug, $quevedo_settings['features'], true ), true ); ?>>
-									<span class="slider round"></span>
-								</label>
-							</fieldset>
+							<span class="switch">
+								<input type="checkbox" name="featureEnabled[]" value="<?php echo esc_attr( $quevedo_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld" aria-describedby="<?php echo esc_attr( $quevedo_feature_slug ); ?>_desc" <?php checked( true, in_array( $quevedo_feature_slug, $quevedo_settings['features'], true ), true ); ?>>
+								<span class="slider round"></span>
+							</span>
 						</td><td>
-							<strong><?php echo esc_html( $quevedo_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_feature['description'] ); ?>
+							<label for="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld"><strong><?php echo esc_html( $quevedo_feature['title'] ); ?></strong></label><br>
+							<span id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_desc"><?php echo esc_html( $quevedo_feature['description'] ); ?></span>
 						</td></tr>
 
 					<?php } ?>
@@ -101,6 +99,7 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					</div>
 
 					<p>
+						<input id="quevedo_select_image_button" type="button" class="button" value="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
 						<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
 					</p>
 				</div>
@@ -113,15 +112,13 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					<?php foreach ( $quevedo_thumbnail_features_array as $quevedo_thumbnail_feature_slug => $quevedo_thumbnail_feature ) { ?>
 						<tr>
 						<td class="check-column">
-							<fieldset>
-								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></span></legend>
-								<label class="switch">
-									<input type="checkbox" name="thumbnailFeatureEnabled[]" value="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_thumbnail_feature_slug, $quevedo_settings['thumbnail_features'], true ), true ); ?>>
-									<span class="slider round"></span>
-								</label>
-							</fieldset>
+							<span class="switch">
+								<input type="checkbox" name="thumbnailFeatureEnabled[]" value="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld" aria-describedby="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_desc" <?php checked( true, in_array( $quevedo_thumbnail_feature_slug, $quevedo_settings['thumbnail_features'], true ), true ); ?>>
+								<span class="slider round"></span>
+							</span>
 						</td><td>
-							<strong><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_thumbnail_feature['description'] ); ?>
+							<label for="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld"><strong><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></strong></label><br>
+							<span id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_desc"><?php echo esc_html( $quevedo_thumbnail_feature['description'] ); ?></span>
 						</td></tr>
 					<?php } ?>
 					</tbody>

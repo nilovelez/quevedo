@@ -38,55 +38,52 @@ msgstr "Quevedo is a set of tools aimed at those authors, writers or bloggers wh
 msgid "WordPress features"
 msgstr "Características de WordPress"
 
-#: admin-content.php:48
-msgid "Some minor theaks to make WordPress a bit more appealing to bloggers and single-user site owners."
-msgstr "Algunos retoques menores para hacer que WordPress sea un poco más atractivo para los bloggers y los propietarios de sitios de un solo autor."
-
-#: admin-content.php:83
+#: admin-content.php:81
 msgid "Featured image"
 msgstr "Imagen destacada"
 
-#: admin-content.php:84
+#: admin-content.php:82
 msgid "Options for featured images on your posts."
 msgstr "Opciones de imagen destacada para tus entradas."
 
-#: admin-content.php:94
+#: admin-content.php:92
 msgid "Default featured image"
 msgstr "Imagen destacada por defecto"
 
-#: admin-content.php:95
+#: admin-content.php:93
 msgid "Select a fallback image for posts that do not have a featured image set."
 msgstr "Selecciona una imagen de respaldo para las entradas que no tengan imagen destacada."
 
-#: quevedo.php:143
+#: quevedo.php:145
 msgid "Select default image"
 msgstr "Seleccionar imagen por defecto"
 
-#: quevedo.php:144
+#: quevedo.php:146
 msgid "Use this image"
 msgstr "Usar esta imagen"
 
-#: admin-content.php:100
+#: admin-content.php:98
+#: admin-content.php:102
 msgid "Select image"
 msgstr "Seleccionar imagen"
 
-#: admin-content.php:104
+#: admin-content.php:103
 msgid "Remove image"
 msgstr "Quitar imagen"
 
-#: admin-content.php:109
+#: admin-content.php:108
 msgid "Featured image options"
 msgstr "Opciones de imagen destacada"
 
-#: admin-content.php:138
+#: admin-content.php:135
 msgid "Shortcodes"
 msgstr "Shortcodes"
 
-#: admin-content.php:143
+#: admin-content.php:140
 msgid "Returns the current year in four-digit format. Very useful for copyright notices."
 msgstr "Devuelve el año actual en formato de cuatro dígitos. Muy útil para los avisos de copyright."
 
-#: admin-content.php:145
+#: admin-content.php:142
 msgid "Returns a paragraph full of \"Lorem ipsum\" fill text. The optional attribute \"words\" defines the number of words, default is 200."
 msgstr "Devuelve un párrafo con texto de relleno \"Lorem ipsum\". El atributo opcional \"words\" define el número de palabras, por defecto es 200."
 
@@ -102,70 +99,54 @@ msgstr "Error al guardar la configuración a base de datos."
 msgid "No changes were needed."
 msgstr "No había nada que guardar."
 
-#: quevedo.php:68
+#: quevedo.php:70
 msgid "Disable post tags"
 msgstr "Desactivar las etiquetas de entradas"
 
-#: quevedo.php:69
-msgid "If not used properly, post tags can create a lot of duplicate content in your site."
-msgstr "Si no se utilizan correctamente, las etiquetas de las entradas pueden crear mucho contenido duplicado en tu sitio."
-
-#: quevedo.php:72
+#: quevedo.php:74
 msgid "Disable post formats"
 msgstr "Desactivar los formatos de entrada"
 
-#: quevedo.php:73
-msgid "If you are not using posts formats they only add clutter to the post editor"
-msgstr "Si no utilizas los formatos de entrada, sólo añaden desorden al editor de entradas"
-
-#: quevedo.php:76
+#: quevedo.php:78
 msgid "Disable author archives"
 msgstr "Desactivar los archivos de autor"
 
-#: quevedo.php:77
+#: quevedo.php:79
 msgid "If you have a single-user blog, the author archive will be exactly the same as your homepage. This could lead to duplicate content SEO issues."
 msgstr "Si tienes un blog con un solo autor, el archivo de autor será exactamente igual que tu página de inicio. Esto podría dar lugar a problemas de SEO de contenido duplicado."
 
-#: quevedo.php:80
+#: quevedo.php:82
 msgid "Disable date archives"
 msgstr "Desactivar los archivos por fecha"
 
-#: quevedo.php:81
+#: quevedo.php:83
 msgid "Date archive pages (year, month and day) can create duplicate or thin content on personal blogs. This feature redirects them to your homepage."
 msgstr "Las páginas de archivo por fecha (año, mes y día) pueden crear contenido duplicado o superficial en blogs personales. Esta función las redirige a tu página de inicio."
 
-#: quevedo.php:84
-msgid "Redirect attachment pages to parent post"
-msgstr "Redirigir páginas de adjuntos a su entrada"
-
-#: quevedo.php:85
-msgid "WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to."
-msgstr "WordPress crea una página individual para cada imagen de la galería, creando un montón de contenido instancial. Esta función redirige la página de adjuntos a la entrada a la que se adjunta la imagen."
-
-#: quevedo.php:88
+#: quevedo.php:90
 msgid "Simplify editor blocks"
 msgstr "Simplificar los bloques del editor"
 
-#: quevedo.php:89
+#: quevedo.php:91
 msgid "When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted."
 msgstr "Al editar una entrada del blog, los bloques disponibles se reducen a: párrafo, encabezado, lista, imagen, cita, separador, código, preformateado."
 
-#: quevedo.php:95
+#: quevedo.php:97
 msgid "Add featured image to post metadata"
 msgstr "Añadir imagen destacada a los metadatos de la entrada"
 
-#: quevedo.php:96
+#: quevedo.php:98
 msgid "Outputs Open Graph and Twitter image meta tags with the post featured image, or with the default featured image if the post has none."
 msgstr "Añade los metadatos de imagen de Open Graph y Twitter con la imagen destacada de la entrada o, si no tiene, con la imagen destacada por defecto."
 
 #. Plugin Name of the plugin
 #: quevedo.php
-#: quevedo.php:108
-#: quevedo.php:109
+#: quevedo.php:110
+#: quevedo.php:111
 msgid "Quevedo"
 msgstr "Quevedo"
 
-#: quevedo.php:157
+#: quevedo.php:159
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -178,3 +159,23 @@ msgstr "Nilo Velez"
 #: quevedo.php
 msgid "https://www.nilovelez.com"
 msgstr "https://www.nilovelez.com"
+
+#: admin-content.php:48
+msgid "Some minor tweaks to make WordPress a bit more appealing to bloggers and single-user site owners."
+msgstr ""
+
+#: quevedo.php:71
+msgid "If not used properly, post tags can create a lot of duplicate content in your site. This feature hides them and redirects tag archives to your homepage."
+msgstr ""
+
+#: quevedo.php:75
+msgid "If you are not using post formats, they only add clutter to the post editor."
+msgstr ""
+
+#: quevedo.php:86
+msgid "Disable attachment pages"
+msgstr ""
+
+#: quevedo.php:87
+msgid "WordPress can create a page for each uploaded file, which adds a lot of thin content. This feature redirects those pages to the file itself, as WordPress does by default on sites created with version 6.4 or later."
+msgstr ""

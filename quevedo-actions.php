@@ -1,9 +1,6 @@
 <?php
 /**
- * Plugin modules:
- * disable_tags
- * disable_author_archives
- * disable_date_archives
+ * Plugin features, loaded on init with the saved settings.
 
  * @package WordPress
  * @subpackage Quevedo
@@ -18,22 +15,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Disable post tags.
 if ( in_array( 'disable_tags', $quevedo_settings['features'], true ) ) {
 	unregister_taxonomy_for_object_type( 'post_tag', 'post' );
-}
 
-// Disable author_archives.
-if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) ) {
-	remove_filter( 'template_redirect', 'redirect_canonical' );
-	add_action(
-		'template_redirect',
-		function () {
-			if ( is_author() ) {
-				wp_safe_redirect( home_url(), 301 );
-				exit();
-			} else {
-				redirect_canonical();
+	// Hide the tags that posts already have, in themes and feeds.
+	add_filter(
+		'get_the_terms',
+		function ( $terms, $post_id, $taxonomy ) {
+			if ( 'post_tag' === $taxonomy ) {
+				return array();
 			}
+			return $terms;
+		},
+		10,
+		3
+	);
+	add_filter(
+		'wp_tag_cloud',
+		function ( $tag_cloud, $args ) {
+			if ( in_array( 'post_tag', (array) $args['taxonomy'], true ) ) {
+				return '';
+			}
+			return $tag_cloud;
+		},
+		10,
+		2
+	);
+	add_filter(
+		'wp_sitemaps_taxonomies',
+		function ( $taxonomies ) {
+			unset( $taxonomies['post_tag'] );
+			return $taxonomies;
 		}
 	);
+	add_filter(
+		'tag_link',
+		function () {
+			return home_url();
+		},
+		99
+	);
+}
+
+// Disable author archives.
+if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) ) {
 	add_filter(
 		'author_link',
 		function () {
@@ -46,18 +69,6 @@ if ( in_array( 'disable_author_archives', $quevedo_settings['features'], true ) 
 
 // Disable date archives.
 if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) {
-	remove_filter( 'template_redirect', 'redirect_canonical' );
-	add_action(
-		'template_redirect',
-		function () {
-			if ( is_date() ) {
-				wp_safe_redirect( home_url(), 301 );
-				exit();
-			} else {
-				redirect_canonical();
-			}
-		}
-	);
 	foreach ( array( 'day_link', 'month_link', 'year_link' ) as $quevedo_date_link_filter ) {
 		add_filter(
 			$quevedo_date_link_filter,
@@ -68,6 +79,28 @@ if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) 
 		);
 	}
 }
+
+// Redirect the disabled archives to the homepage. Priority 9 runs before
+// redirect_canonical(), so there is only one redirect.
+add_action(
+	'template_redirect',
+	function () {
+		global $quevedo_settings;
+		$features = $quevedo_settings['features'];
+
+		$redirect = (
+			( is_tag() && in_array( 'disable_tags', $features, true ) ) ||
+			( is_author() && in_array( 'disable_author_archives', $features, true ) ) ||
+			( is_date() && in_array( 'disable_date_archives', $features, true ) )
+		);
+
+		if ( $redirect ) {
+			wp_safe_redirect( home_url(), 301 );
+			exit();
+		}
+	},
+	9
+);
 
 // Disable post formats.
 // This file is loaded on init, after the theme has declared its features.
@@ -101,55 +134,38 @@ if ( in_array( 'simplify_editor_blocks', $quevedo_settings['features'], true ) )
 	);
 }
 
-// Redirect attachments.
+// Disable attachment pages. WordPress then redirects them to the file, as it
+// does by default on sites created with version 6.4 or later.
 if ( in_array( 'redirect_attachments', $quevedo_settings['features'], true ) ) {
-	add_action(
-		'template_redirect',
-		function () {
-			global $post;
-			if (
-				is_attachment() &&
-				isset( $post->post_parent ) &&
-				is_numeric( $post->post_parent ) &&
-				( 0 !== $post->post_parent )
-			) {
-				wp_safe_redirect( get_permalink( $post->post_parent ), 301 );
-				exit();
-			}
-		}
-	);
+	add_filter( 'pre_option_wp_attachment_pages_enabled', '__return_zero' );
 }
 
 /**
  * Uses the default featured image for posts that don't have one.
  *
- * Callback for the default_post_metadata filter, which runs when a post has
- * no value for the requested meta key.
+ * Callback for the post_thumbnail_id filter, so it only changes the image
+ * that themes show. The post itself keeps no featured image, and the editor
+ * (admin and REST API) shows it as it is.
  *
- * @param mixed  $value     The value to return, null by default.
- * @param int    $object_id Post ID.
- * @param string $meta_key  Meta key.
- * @return mixed Default featured image ID for posts, otherwise $value.
+ * @param int|false    $thumbnail_id Post thumbnail ID, or false if the post has none.
+ * @param WP_Post|null $post         Post object.
+ * @return int|false Default featured image ID for posts without one, otherwise $thumbnail_id.
  */
-function default_post_metadata__thumbnail_id( $value, $object_id, $meta_key ) {
-	if ( '_thumbnail_id' !== $meta_key ) {
-		return $value;
+function default_post_thumbnail_id( $thumbnail_id, $post ) {
+	if ( $thumbnail_id || ! $post || 'post' !== $post->post_type ) {
+		return $thumbnail_id;
 	}
-	// Only posts use the default featured image.
-	$post_type = get_post_type( $object_id );
-	if ( 'post' !== $post_type ) {
-		return $value;
+	if ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+		return $thumbnail_id;
 	}
-	$quevedo_thumbnail_id = intval( get_option( 'quevedo_thumbnail', 0 ) );
-	if ( 0 !== $quevedo_thumbnail_id ) {
-		$thumbnail_post_type = get_post_type( $quevedo_thumbnail_id );
-		if ( 'attachment' === $thumbnail_post_type ) {
-			return $quevedo_thumbnail_id;
-		}
+
+	$default_thumbnail_id = intval( get_option( 'quevedo_thumbnail', 0 ) );
+	if ( 0 !== $default_thumbnail_id && 'attachment' === get_post_type( $default_thumbnail_id ) ) {
+		return $default_thumbnail_id;
 	}
-	return $value;
+	return $thumbnail_id;
 }
-add_filter( 'default_post_metadata', __NAMESPACE__ . '\default_post_metadata__thumbnail_id', 10, 3 );
+add_filter( 'post_thumbnail_id', __NAMESPACE__ . '\default_post_thumbnail_id', 10, 2 );
 
 /**
  * Returns the attachment ID to use as a post featured image.

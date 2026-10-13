@@ -2,7 +2,8 @@
 Contributors: nilovelez
 Tags: writing, blogging, seo, content
 Requires at least: 5.9
-Tested up to: 7.0
+Tested up to: 7.1
+Requires PHP: 8.2
 Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -18,11 +19,11 @@ WordPress was born as a small blogging tool. Over the years it has grown and now
 = WordPress features =
 Some minor tweaks to make WordPress a bit more appealing to bloggers and single-user site owners.
 
-* Disable post tags: Prevents duplicate content
+* Disable post tags: Prevents duplicate content by hiding tags and redirecting tag archives to the homepage
 * Disable post formats: Removes clutter from the post editor
 * Disable author archives: Avoids SEO issues for single-author blogs
 * Disable date archives: Redirects year, month and day archive pages to the homepage
-* Redirect attachment pages: Prevents thin content by redirecting to the parent post
+* Disable attachment pages: Prevents thin content by redirecting attachment pages to the file, as WordPress does by default on sites created with version 6.4 or later
 * Simplify editor blocks: When editing a blog post, the available blocks are reduced to: paragraph, heading, list, image, quote, separator, code, preformatted
 
 = Featured image =
@@ -54,6 +55,15 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 * Settings can only be saved by users allowed to manage options
 * The settings page styles and scripts are now separate files, loaded only on that page
 * Improved output escaping on the settings page
+* "Disable post tags" now also hides existing tags on the site, in feeds and in the sitemap, and redirects tag archives to the homepage
+* "Redirect attachment pages" is now "Disable attachment pages": it redirects attachment pages to the file, using the setting WordPress added in version 6.4
+* Author, date and tag archives now redirect to the homepage in a single step
+* The default featured image is no longer shown in the editor as if the post had it; it is only used on the site
+* Added a "Select image" button for the default featured image
+* The settings switches can now be used with the keyboard and screen readers
+* Fixed typos in the settings page
+* Requires WordPress 5.9 and PHP 8.2
+* Tested up to WordPress 7.1
 * Code cleanup to follow the WordPress Coding Standards, with no changes in behavior
 
 = 1.4 =

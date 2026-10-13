@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Displays standar WordPress notices.
+ * Displays standard WordPress notices.
  */
 class Notice {
 	/**
@@ -31,7 +31,7 @@ class Notice {
 	private $notice_class;
 
 	/**
-	 * Displays standar WordPress dashboard notice.
+	 * Displays a standard WordPress dashboard notice.
 	 *
 	 * @param string $message     Message to display.
 	 * @param string $level       Can be error, warning, info or success.
