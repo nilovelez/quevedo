@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 /**
  * Shortcode to return Lorem ipsum blocks
- * [lorem words="100"]
+ * [lipsum words="200"]
  *
- * @param array $atts only accepted param is (int) words (number of word to output).
- * min 1, max 2000, default 100.
+ * @param array $atts only accepted param is (int) words (number of words to output).
+ * min 1, max 2000, default 200. Invalid values use the default.
  * @return string shortcode HTML output.
  */
 function quevedo_lipsum_function( $atts ) {
@@ -30,7 +30,10 @@ function quevedo_lipsum_function( $atts ) {
 		$atts
 	);
 
-	$words = ( ! is_int( $a['words'] ) ) ? $a['words'] : $default_words;
+	$words = intval( $a['words'] );
+	if ( $words < 1 ) {
+		$words = $default_words;
+	}
 	$words = min( $words, $max_words );
 
 	$return = '';

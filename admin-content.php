@@ -26,176 +26,6 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 <div class="wrap" style="max-width: 1000px;">
 
 
-<style>
-/* The switch - the box around the slider */
-#quevedo-table td,
-#quevedo-thumbnail-table td {
-	padding-top: 0;
-}
-#quevedo-table .switch,
-#quevedo-thumbnail-table .switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
-}
-#quevedo-table td,
-#quevedo-thumbnail-table td {
-	vertical-align: top;
-}
-#quevedo-table .check-column,
-#quevedo-thumbnail-table .check-column {
-	padding-left: 0;
-}
-
-/* Hide default HTML checkbox */
-#quevedo-table .switch input,
-#quevedo-thumbnail-table .switch input {display:none;}
-
-/* The slider */
-#quevedo-table .slider,
-#quevedo-thumbnail-table .slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-#quevedo-table .slider:before,
-#quevedo-thumbnail-table .slider:before {
-	position: absolute;
-	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-#quevedo-table input:checked + .slider,
-#quevedo-thumbnail-table input:checked + .slider {
-	background-color: #34a853;
-}
-
-#quevedo-table input:focus + .slider,
-#quevedo-thumbnail-table input:focus + .slider {
-	box-shadow: 0 0 1px #34a853;
-}
-
-#quevedo-table input:checked + .slider:before,
-#quevedo-thumbnail-table input:checked + .slider:before {
-	-webkit-transform: translateX(26px);
-	-ms-transform: translateX(26px);
-	transform: translateX(26px);
-}
-
-/* Rounded sliders */
-#quevedo-table .slider.round,
-#quevedo-thumbnail-table .slider.round {
-	border-radius: 34px;
-}
-
-#quevedo-table .slider.round:before,
-#quevedo-thumbnail-table .slider.round:before {
-	border-radius: 50%;
-}
-
-#quevedo-table .quevedo-table thead td.check-column {
-	width: 60px;
-}
-#quevedo-table .quevedo-table tbody th.check-column {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	width: 60px;
-}
-
-
-.quevedo-settings-card {
-	box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
-	border-radius: 2px;
-	background-color: #fff;
-	margin-bottom: 24px;
-}
-.quevedo-settings-card-header {
-	padding: 16px 24px;
-	border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-.quevedo-settings-card-subtitle {
-	margin: 4px 0 0;
-	color: #757575;
-}
-.quevedo-settings-card-header h2 {
-	margin: 0;
-}
-.quevedo-settings-card-body {
-	padding: 16px 24px 0;
-}
-.quevedo-settings-subsection {
-	margin-bottom: 24px;
-}
-.quevedo-settings-subsection h3 {
-	margin: 0 0 8px;
-}
-.quevedo-settings-subsection-description {
-	margin: 0 0 12px;
-	color: #757575;
-}
-
-
-#quevedo-shortcode-list {
-	padding-bottom: 24px;
-}
-#quevedo-shortcode-list dt {
-	font-family: monospace;
-	font-weight: bold;
-	font-size: 120%;
-}
-#quevedo-shortcode-list dd {
-	margin-bottom: 1em;
-	padding-left: 3em;
-}
-
-.quevedo-image-preview-wrapper {
-	position: relative;
-	width: auto;
-}
-#quevedo_thumbnail_preview {
-	max-width: 100%;
-	max-height: 200px;
-	width: auto;
-	cursor: pointer;
-}
-#quevedo_remove_image_button {
-
-}
-#quevedo-header {
-	margin-bottom: 1em;
-	position: relative;
-	min-height: 128px;
-	padding-right: 140px;
-}
-#quevedo-header:before {
-	display: block;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	content: '';
-	width: 128px;
-	height: 128px;
-	background: url('<?php echo esc_attr( plugin_dir_url( __FILE__ ) . 'img/icon-256x256.png' ); ?>') center center no-repeat;
-	background-size: contain;
-}
-
-</style>
-
-
 <div id="quevedo-header">
 
 	<h1><?php esc_html_e( 'Quevedo writer tools', 'quevedo' ); ?></h1>
@@ -215,7 +45,7 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 			<div class="quevedo-settings-card-header">
 				<h2><?php esc_html_e( 'WordPress features', 'quevedo' ); ?></h2>
-				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Some minor theaks to make WordPress a bit more appealing to bloggers and single-user site owners.', 'quevedo' ); ?></p>
+				<p class="quevedo-settings-card-subtitle"><?php esc_html_e( 'Some minor tweaks to make WordPress a bit more appealing to bloggers and single-user site owners.', 'quevedo' ); ?></p>
 			</div>
 			<div class="quevedo-settings-card-body">
 				<form id="quevedo-features-form" action="" method="POST">
@@ -228,15 +58,13 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					<?php foreach ( $quevedo_features_array as $quevedo_feature_slug => $quevedo_feature ) { ?>
 						<tr>
 						<td class="check-column">
-							<fieldset>
-								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_feature['title'] ); ?></span></legend>
-								<label class="switch">
-									<input type="checkbox" name="featureEnabled[]" value="<?php echo esc_attr( $quevedo_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_feature_slug, $quevedo_settings['features'], true ), true ); ?>>
-									<span class="slider round"></span>
-								</label>
-							</fieldset>
+							<span class="switch">
+								<input type="checkbox" name="featureEnabled[]" value="<?php echo esc_attr( $quevedo_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld" aria-describedby="<?php echo esc_attr( $quevedo_feature_slug ); ?>_desc" <?php checked( true, in_array( $quevedo_feature_slug, $quevedo_settings['features'], true ), true ); ?>>
+								<span class="slider round"></span>
+							</span>
 						</td><td>
-							<strong><?php echo esc_html( $quevedo_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_feature['description'] ); ?>
+							<label for="<?php echo esc_attr( $quevedo_feature_slug ); ?>_fld"><strong><?php echo esc_html( $quevedo_feature['title'] ); ?></strong></label><br>
+							<span id="<?php echo esc_attr( $quevedo_feature_slug ); ?>_desc"><?php echo esc_html( $quevedo_feature['description'] ); ?></span>
 						</td></tr>
 
 					<?php } ?>
@@ -256,8 +84,6 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 
 			<div class="quevedo-settings-card-body">
 
-			<?php wp_enqueue_media(); ?>
-
 			<form id="quevedo-thumbnail-form" action="" method="POST">
 				<input type="hidden" name="quevedo_thumbnail_saved" value="true">
 				<?php wp_nonce_field( 'quevedo-thumbnail-save' ); ?>
@@ -269,10 +95,11 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					<input type="hidden" name="quevedo_thumbnail_id" id="quevedo_thumbnail_id" value="<?php echo esc_attr( $quevedo_settings['thumbnail'] ); ?>">
 
 					<div class="quevedo-image-preview-wrapper">
-						<img id="quevedo_thumbnail_preview" src="<?php echo esc_attr( $quevedo_current_thumbnail ); ?>" alt="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
+						<img id="quevedo_thumbnail_preview" src="<?php echo esc_url( $quevedo_current_thumbnail ); ?>" alt="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
 					</div>
 
 					<p>
+						<input id="quevedo_select_image_button" type="button" class="button" value="<?php esc_attr_e( 'Select image', 'quevedo' ); ?>">
 						<input id="quevedo_remove_image_button" type="button" class="button" value="<?php esc_attr_e( 'Remove image', 'quevedo' ); ?>" <?php disabled( 0 === $quevedo_settings['thumbnail'] ); ?> >
 					</p>
 				</div>
@@ -285,15 +112,13 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 					<?php foreach ( $quevedo_thumbnail_features_array as $quevedo_thumbnail_feature_slug => $quevedo_thumbnail_feature ) { ?>
 						<tr>
 						<td class="check-column">
-							<fieldset>
-								<legend class="screen-reader-text"><span><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></span></legend>
-								<label class="switch">
-									<input type="checkbox" name="thumbnailFeatureEnabled[]" value="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld" <?php checked( true, in_array( $quevedo_thumbnail_feature_slug, $quevedo_settings['thumbnail_features'], true ), true ); ?>>
-									<span class="slider round"></span>
-								</label>
-							</fieldset>
+							<span class="switch">
+								<input type="checkbox" name="thumbnailFeatureEnabled[]" value="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>" id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld" aria-describedby="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_desc" <?php checked( true, in_array( $quevedo_thumbnail_feature_slug, $quevedo_settings['thumbnail_features'], true ), true ); ?>>
+								<span class="slider round"></span>
+							</span>
 						</td><td>
-							<strong><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></strong><br><?php echo esc_html( $quevedo_thumbnail_feature['description'] ); ?>
+							<label for="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_fld"><strong><?php echo esc_html( $quevedo_thumbnail_feature['title'] ); ?></strong></label><br>
+							<span id="<?php echo esc_attr( $quevedo_thumbnail_feature_slug ); ?>_desc"><?php echo esc_html( $quevedo_thumbnail_feature['description'] ); ?></span>
 						</td></tr>
 					<?php } ?>
 					</tbody>
@@ -323,82 +148,3 @@ if ( 0 === $quevedo_settings['thumbnail'] ) {
 	</div>
 
 </div>
-
-<script type='text/javascript'>
-
-	jQuery( document ).ready( function( $ ) {
-		var file_frame;
-		var wp_media_post_id = wp.media.view.settings.post.id;
-		var default_thumbnail = '<?php echo esc_attr( $quevedo_default_thumbnail ); ?>';
-
-		function quevedoRestoreMediaPostId() {
-			wp.media.view.settings.post.id = wp_media_post_id;
-			wp.media.model.settings.post.id = wp_media_post_id;
-		}
-
-		function quevedoPrepareMediaUploader( frame ) {
-			wp.media.view.settings.post.id = 0;
-			wp.media.model.settings.post.id = 0;
-
-			if ( ! frame || ! frame.uploader || ! frame.uploader.uploader || ! frame.uploader.uploader.uploader ) {
-				return;
-			}
-
-			delete frame.uploader.uploader.uploader.settings.multipart_params.post_id;
-		}
-
-		jQuery( '#quevedo_thumbnail_preview' ).on( 'click', function( event ) {
-			event.preventDefault();
-
-			if ( file_frame ) {
-				quevedoPrepareMediaUploader( file_frame );
-				file_frame.open();
-				return;
-			}
-
-			file_frame = wp.media( {
-				title: '<?php echo esc_js( __( 'Select default image', 'quevedo' ) ); ?>',
-				button: {
-					text: '<?php echo esc_js( __( 'Use this image', 'quevedo' ) ); ?>',
-				},
-				library: {
-					type: 'image',
-				},
-				multiple: false,
-			} );
-
-			file_frame.on( 'open', function() {
-				quevedoPrepareMediaUploader( file_frame );
-
-				if ( file_frame.uploader && file_frame.uploader.uploader ) {
-					$( file_frame.uploader.uploader ).off( 'uploader:ready.quevedo' ).on( 'uploader:ready.quevedo', function() {
-						quevedoPrepareMediaUploader( file_frame );
-					} );
-				}
-			} );
-
-			file_frame.on( 'select', function() {
-				var attachment = file_frame.state().get( 'selection' ).first().toJSON();
-
-				$( '#quevedo_thumbnail_preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
-				$( '#quevedo_thumbnail_id' ).val( attachment.id );
-				$( '#quevedo_remove_image_button' ).prop( 'disabled', false );
-
-				quevedoRestoreMediaPostId();
-			} );
-
-			file_frame.on( 'close', function() {
-				quevedoRestoreMediaPostId();
-			} );
-
-			quevedoPrepareMediaUploader( file_frame );
-			file_frame.open();
-		} );
-
-		jQuery( '#quevedo_remove_image_button' ).on( 'click', function() {
-			$( '#quevedo_thumbnail_id' ).val( '0' );
-			$( '#quevedo_thumbnail_preview' ).attr( 'src', default_thumbnail );
-			$( this ).prop( 'disabled', true );
-		} );
-	} );
-</script>

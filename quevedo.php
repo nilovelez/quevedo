@@ -7,6 +7,8 @@
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
  * Domain Path: /languages
+ * Requires at least: 5.9
+ * Requires PHP: 8.2
 
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +22,11 @@ namespace quevedo;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * Plugin version, used to refresh the cached admin files. Keep it in sync with the header.
+ */
+const VERSION = '1.4';
 
 add_action(
 	'init',
@@ -61,11 +68,11 @@ add_action(
 		$quevedo_features_array = array(
 			'disable_tags'            => array(
 				'title'       => __( 'Disable post tags', 'quevedo' ),
-				'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site.', 'quevedo' ),
+				'description' => __( 'If not used properly, post tags can create a lot of duplicate content in your site. This feature hides them and redirects tag archives to your homepage.', 'quevedo' ),
 			),
 			'disable_formats'         => array(
 				'title'       => __( 'Disable post formats', 'quevedo' ),
-				'description' => __( 'If you are not using posts formats they only add clutter to the post editor', 'quevedo' ),
+				'description' => __( 'If you are not using post formats, they only add clutter to the post editor.', 'quevedo' ),
 			),
 			'disable_author_archives' => array(
 				'title'       => __( 'Disable author archives', 'quevedo' ),
@@ -76,8 +83,8 @@ add_action(
 				'description' => __( 'Date archive pages (year, month and day) can create duplicate or thin content on personal blogs. This feature redirects them to your homepage.', 'quevedo' ),
 			),
 			'redirect_attachments'    => array(
-				'title'       => __( 'Redirect attachment pages to parent post', 'quevedo' ),
-				'description' => __( 'WordPress creates a simgle pagle for each gallery image, creating a lot of thin content. This feature redirects the attachment page to the post the image is attached to.', 'quevedo' ),
+				'title'       => __( 'Disable attachment pages', 'quevedo' ),
+				'description' => __( 'WordPress can create a page for each uploaded file, which adds a lot of thin content. This feature redirects those pages to the file itself, as WordPress does by default on sites created with version 6.4 or later.', 'quevedo' ),
 			),
 			'simplify_editor_blocks'  => array(
 				'title'       => __( 'Simplify editor blocks', 'quevedo' ),
@@ -88,7 +95,7 @@ add_action(
 		$quevedo_thumbnail_features_array = array(
 			'featured_image_og_meta' => array(
 				'title'       => __( 'Add featured image to post metadata', 'quevedo' ),
-				'description' => __( 'Outputs Open Graph and Twitter image meta tags using your featured image settings. Uses the default featured image when set; otherwise the post featured image.', 'quevedo' ),
+				'description' => __( 'Outputs Open Graph and Twitter image meta tags with the post featured image, or with the default featured image if the post has none.', 'quevedo' ),
 			),
 		);
 
@@ -109,6 +116,39 @@ add_action(
 				}
 			);
 
+			// Load the settings page styles and scripts, only on that page.
+			add_action(
+				'admin_enqueue_scripts',
+				function ( $hook_suffix ) {
+					if ( 'tools_page_quevedo' !== $hook_suffix ) {
+						return;
+					}
+					wp_enqueue_media();
+					wp_enqueue_style(
+						'quevedo-admin',
+						plugin_dir_url( __FILE__ ) . 'admin/quevedo-admin.css',
+						array(),
+						VERSION
+					);
+					wp_enqueue_script(
+						'quevedo-admin',
+						plugin_dir_url( __FILE__ ) . 'admin/quevedo-admin.js',
+						array( 'jquery', 'media-editor' ),
+						VERSION,
+						true
+					);
+					wp_localize_script(
+						'quevedo-admin',
+						'quevedoAdmin',
+						array(
+							'defaultThumbnail'  => plugin_dir_url( __FILE__ ) . 'img/no-image.svg',
+							'selectImageTitle'  => __( 'Select default image', 'quevedo' ),
+							'selectImageButton' => __( 'Use this image', 'quevedo' ),
+						)
+					);
+				}
+			);
+
 			// Add "settings" link to Quevedo in the plugin list.
 			add_filter(
 				'plugin_action_links',
@@ -125,7 +165,8 @@ add_action(
 			);
 
 			/* Sanitization not needed, only used to check if form has been submitted */
-			if ( filter_input( INPUT_POST, 'quevedo_features_saved' ) !== null ) {
+			$quevedo_can_save = current_user_can( 'manage_options' );
+			if ( $quevedo_can_save && filter_input( INPUT_POST, 'quevedo_features_saved' ) !== null ) {
 				check_admin_referer( 'quevedo-features-save' );
 
 				/* Sanitization not needed, values are checked against a valid options array */
@@ -138,7 +179,7 @@ add_action(
 				save_features( $options );
 			}
 
-			if ( filter_input( INPUT_POST, 'quevedo_thumbnail_saved' ) !== null ) {
+			if ( $quevedo_can_save && filter_input( INPUT_POST, 'quevedo_thumbnail_saved' ) !== null ) {
 				check_admin_referer( 'quevedo-thumbnail-save' );
 
 				$thumbnail_id       = filter_input(
@@ -195,7 +236,7 @@ function save_features( $options = array() ) {
 
 	read_settings();
 	$valid_options = array_keys( $quevedo_features_array );
-	$options       = array_intersect( $options, $valid_options );
+	$options       = array_values( array_intersect( (array) $options, $valid_options ) );
 
 	if ( count( $options ) > 0 ) {
 		$num_options = count( $options );
@@ -245,7 +286,7 @@ function save_thumbnail_settings( $thumbnail_id = 0, $thumbnail_features = array
 
 	$thumbnail_id       = intval( $thumbnail_id );
 	$valid_features     = array_keys( $quevedo_thumbnail_features_array );
-	$thumbnail_features = array_intersect( (array) $thumbnail_features, $valid_features );
+	$thumbnail_features = array_values( array_intersect( (array) $thumbnail_features, $valid_features ) );
 
 	if ( count( $thumbnail_features ) > 0 ) {
 		$num_features = count( $thumbnail_features );
