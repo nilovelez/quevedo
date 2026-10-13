@@ -70,20 +70,9 @@ if ( in_array( 'disable_date_archives', $quevedo_settings['features'], true ) ) 
 }
 
 // Disable post formats.
+// This file is loaded on init, after the theme has declared its features.
 if ( in_array( 'disable_formats', $quevedo_settings['features'], true ) ) {
-	add_action(
-		'after_setup_theme',
-		function () {
-			remove_theme_support( 'post-formats' );
-		},
-		100
-	);
-	add_action(
-		'admin_init',
-		function () {
-			remove_theme_support( 'post-formats' );
-		}
-	);
+	remove_theme_support( 'post-formats' );
 }
 
 // Simplify editor blocks.
@@ -97,6 +86,7 @@ if ( in_array( 'simplify_editor_blocks', $quevedo_settings['features'], true ) )
 					'core/paragraph',
 					'core/heading',
 					'core/list',
+					'core/list-item',
 					'core/image',
 					'core/quote',
 					'core/separator',
@@ -164,7 +154,7 @@ add_filter( 'default_post_metadata', __NAMESPACE__ . '\default_post_metadata__th
 /**
  * Returns the attachment ID to use as a post featured image.
  *
- * Priority: default featured image, post featured image, none.
+ * Priority: post featured image, default featured image, none.
  *
  * @param int $post_id Post ID.
  * @return int Attachment ID or 0.
@@ -175,14 +165,14 @@ function get_post_featured_image_attachment_id( $post_id ) {
 		return 0;
 	}
 
-	$default_thumbnail_id = intval( get_option( 'quevedo_thumbnail', 0 ) );
-	if ( 0 !== $default_thumbnail_id && 'attachment' === get_post_type( $default_thumbnail_id ) ) {
-		return $default_thumbnail_id;
-	}
-
 	$post_thumbnail_id = intval( get_post_meta( $post_id, '_thumbnail_id', true ) );
 	if ( 0 !== $post_thumbnail_id && 'attachment' === get_post_type( $post_thumbnail_id ) ) {
 		return $post_thumbnail_id;
+	}
+
+	$default_thumbnail_id = intval( get_option( 'quevedo_thumbnail', 0 ) );
+	if ( 0 !== $default_thumbnail_id && 'attachment' === get_post_type( $default_thumbnail_id ) ) {
+		return $default_thumbnail_id;
 	}
 
 	return 0;

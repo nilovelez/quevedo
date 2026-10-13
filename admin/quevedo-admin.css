@@ -1,0 +1,162 @@
+/* Quevedo settings page. */
+
+/* The switch - the box around the slider */
+#quevedo-table td,
+#quevedo-thumbnail-table td {
+	padding-top: 0;
+}
+#quevedo-table .switch,
+#quevedo-thumbnail-table .switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+#quevedo-table td,
+#quevedo-thumbnail-table td {
+	vertical-align: top;
+}
+#quevedo-table .check-column,
+#quevedo-thumbnail-table .check-column {
+	padding-left: 0;
+}
+
+/* Hide default HTML checkbox */
+#quevedo-table .switch input,
+#quevedo-thumbnail-table .switch input {display:none;}
+
+/* The slider */
+#quevedo-table .slider,
+#quevedo-thumbnail-table .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+#quevedo-table .slider:before,
+#quevedo-thumbnail-table .slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+#quevedo-table input:checked + .slider,
+#quevedo-thumbnail-table input:checked + .slider {
+	background-color: #34a853;
+}
+
+#quevedo-table input:focus + .slider,
+#quevedo-thumbnail-table input:focus + .slider {
+	box-shadow: 0 0 1px #34a853;
+}
+
+#quevedo-table input:checked + .slider:before,
+#quevedo-thumbnail-table input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+#quevedo-table .slider.round,
+#quevedo-thumbnail-table .slider.round {
+	border-radius: 34px;
+}
+
+#quevedo-table .slider.round:before,
+#quevedo-thumbnail-table .slider.round:before {
+	border-radius: 50%;
+}
+
+#quevedo-table .quevedo-table thead td.check-column {
+	width: 60px;
+}
+#quevedo-table .quevedo-table tbody th.check-column {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 60px;
+}
+
+.quevedo-settings-card {
+	box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+	border-radius: 2px;
+	background-color: #fff;
+	margin-bottom: 24px;
+}
+.quevedo-settings-card-header {
+	padding: 16px 24px;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.quevedo-settings-card-subtitle {
+	margin: 4px 0 0;
+	color: #757575;
+}
+.quevedo-settings-card-header h2 {
+	margin: 0;
+}
+.quevedo-settings-card-body {
+	padding: 16px 24px 0;
+}
+.quevedo-settings-subsection {
+	margin-bottom: 24px;
+}
+.quevedo-settings-subsection h3 {
+	margin: 0 0 8px;
+}
+.quevedo-settings-subsection-description {
+	margin: 0 0 12px;
+	color: #757575;
+}
+
+#quevedo-shortcode-list {
+	padding-bottom: 24px;
+}
+#quevedo-shortcode-list dt {
+	font-family: monospace;
+	font-weight: bold;
+	font-size: 120%;
+}
+#quevedo-shortcode-list dd {
+	margin-bottom: 1em;
+	padding-left: 3em;
+}
+
+.quevedo-image-preview-wrapper {
+	position: relative;
+	width: auto;
+}
+#quevedo_thumbnail_preview {
+	max-width: 100%;
+	max-height: 200px;
+	width: auto;
+	cursor: pointer;
+}
+#quevedo-header {
+	margin-bottom: 1em;
+	position: relative;
+	min-height: 128px;
+	padding-right: 140px;
+}
+#quevedo-header:before {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	content: '';
+	width: 128px;
+	height: 128px;
+	background: url('../img/icon-256x256.png') center center no-repeat;
+	background-size: contain;
+}

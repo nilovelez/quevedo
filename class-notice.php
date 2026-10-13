@@ -56,7 +56,7 @@ class Notice {
 	public function display_notice() {
 		if ( ! empty( $this->notice_message ) ) {
 			?>
-		<div class="<?php echo esc_html( $this->notice_class ); ?>">
+		<div class="<?php echo esc_attr( $this->notice_class ); ?>">
 			<p><?php echo esc_html( $this->notice_message ); ?></p>
 		</div>
 			<?php

@@ -29,7 +29,7 @@ Some minor tweaks to make WordPress a bit more appealing to bloggers and single-
 Options for featured images on your posts.
 
 * Default featured image: Fallback image for posts without a featured image set
-* Add featured image to post metadata: Outputs Open Graph and Twitter image meta tags using the default featured image when set, otherwise the post featured image
+* Add featured image to post metadata: Outputs Open Graph and Twitter image meta tags with the post featured image, or with the default featured image if the post has none
 
 = Shortcodes =
 `[year]`
@@ -47,6 +47,13 @@ Returns a paragraph full of "Lorem ipsum" fill text. The optional attribute "wor
 == Changelog ==
 
 = 1.5 =
+* Fixed lists in the simplified editor: pressing Enter now adds a new list item
+* Fixed the Open Graph and Twitter image: the post featured image now takes priority over the default featured image
+* Fixed the [lipsum] shortcode with invalid word counts, which now fall back to the default of 200 words
+* Fixed "Disable post formats", which only worked in the admin
+* Settings can only be saved by users allowed to manage options
+* The settings page styles and scripts are now separate files, loaded only on that page
+* Improved output escaping on the settings page
 * Code cleanup to follow the WordPress Coding Standards, with no changes in behavior
 
 = 1.4 =
