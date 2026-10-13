@@ -1,0 +1,14 @@
+# Binary files.
+*.png binary
+*.jpg binary
+*.ai  binary
+*.mo  binary
+
+# Development files excluded from `git archive` (release zip).
+/.gitattributes export-ignore
+/phpcs.xml      export-ignore
+/CLAUDE.md      export-ignore
+/guppy          export-ignore
+/README.md      export-ignore
+/assets         export-ignore
+/_PSD           export-ignore

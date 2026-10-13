@@ -48,6 +48,20 @@ Quevedo includes useful shortcodes for writers:
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Configure each tool using the corresponding link on the **Tools > Quevedo** side menu
 
+## Development
+
+### Building the release zip
+
+The release zip is built with `git archive` from the repository root:
+
+```sh
+git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
+```
+
+- `--prefix` puts the files inside a `quevedo/` folder, as WordPress expects when uploading a plugin zip. The zip file name includes the version, but the folder inside does not.
+- Development files, such as this README, the WordPress.org assets and the project notes, are left out through `export-ignore` rules in `.gitattributes`. To leave out a new development file, add it there.
+- Only committed files are included: commit your changes before building the zip.
+
 ## Changelog
 
 ### 1.4
