@@ -91,6 +91,7 @@ git archive --format=zip --prefix=quevedo/ -o quevedo-1.4.zip HEAD
 - Fixed typos in the settings page
 - Requires WordPress 5.9 and PHP 8.2
 - Tested up to WordPress 7.1
+- Translations now come only from translate.wordpress.org, where WordPress downloads them automatically
 - Code cleanup to follow the WordPress Coding Standards, with no changes in behavior
 
 ### 1.4

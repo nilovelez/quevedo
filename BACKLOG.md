@@ -6,10 +6,6 @@ Known issues and pending work, found while analyzing and testing Quevedo 1.4 in 
 
 - **Editor notice for the default featured image.** Posts without a featured image now show none in the editor, which is accurate but hides that the site will use the default one. Add a note in the editor's featured image panel, such as "The default featured image will be used".
 
-## WordPress.org review
-
-- **Plugin Check.** Not run yet; it needs a Studio site.
-
 ## Accessibility and UI
 
 - **The image picker opens on the upload tab.** Opening it on the media library tab would save a click.

@@ -5,8 +5,6 @@
 	<file>.</file>
 	<exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<!-- Translation files generated with `wp i18n make-php`. -->
-	<exclude-pattern>/languages/*.l10n.php</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>
