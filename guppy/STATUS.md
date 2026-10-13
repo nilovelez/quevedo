@@ -1,6 +1,6 @@
 ---
 estado: activo
-siguiente_paso: Decidir qué fallos del análisis corregir y en qué hito; la rama chore/playground-blueprint espera aprobación
+siguiente_paso: Organizar en hitos el BACKLOG.md con los fallos del análisis
 bloqueo: ""
 actualizado: 2026-10-13
 ---
@@ -11,5 +11,6 @@ Plugin de WordPress publicado en WordPress.org; la última versión es la 1.4 (2
 
 ## Diario
 
+- 2026-10-13: backlog con lo que hay que reparar en BACKLOG.md; el blueprint de Playground, fusionado en master.
 - 2026-10-13: análisis del código y pruebas en Playground con un blueprint nuevo (rama chore/playground-blueprint, sin fusionar).
 - 2026-10-13: guppy/STATUS.md creado.
