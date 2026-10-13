@@ -6,7 +6,6 @@
  * Author: Nilo Velez
  * Author URI: https://www.nilovelez.com
  * Text Domain: quevedo
- * Domain Path: /languages
  * Requires at least: 5.9
  * Requires PHP: 8.2
 
@@ -27,17 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin version, used to refresh the cached admin files. Keep it in sync with the header.
  */
 const VERSION = '1.4';
-
-add_action(
-	'init',
-	function () {
-		load_plugin_textdomain(
-			'quevedo',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages'
-		);
-	}
-);
 
 /**
  * Global settings array for the plugin

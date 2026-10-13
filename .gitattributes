@@ -2,7 +2,6 @@
 *.png binary
 *.jpg binary
 *.ai  binary
-*.mo  binary
 
 # Development files excluded from `git archive` (release zip).
 /.gitattributes export-ignore
