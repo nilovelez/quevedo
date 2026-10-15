@@ -1,47 +1,46 @@
----
-estado: activo
-siguiente_paso: Publicar la 1.5 en WordPress.org por SVN; antes, decidir quién instala el cliente svn y si se añade un Upgrade Notice
-bloqueo: ""
-actualizado: 2026-10-13
----
+# Status
 
-# Estado
+WordPress plugin published on WordPress.org. Version 1.5 is published on GitHub (tag v1.5) and pending upload to WordPress.org: fixes from the code analysis, security, accessibility, PHP 8.2, and translations only from translate.wordpress.org. The code passes WPCS and Plugin Check with no errors.
 
-Plugin de WordPress publicado en WordPress.org. La 1.5 está publicada en GitHub (etiqueta v1.5) y pendiente de subir a WordPress.org: fallos del análisis, seguridad, accesibilidad, PHP 8.2 y traducciones solo desde translate.wordpress.org. El código pasa WPCS y Plugin Check sin errores.
+Next step: publish 1.5 to WordPress.org through SVN. Before that, decide who installs the svn client and whether to add an Upgrade Notice. No blockers.
 
-## Publicar la 1.5 en WordPress.org (pendiente)
+## Publishing 1.5 to WordPress.org (pending)
 
-Situación del SVN (https://plugins.svn.wordpress.org/quevedo/) el 2026-10-13:
+State of the SVN repository (https://plugins.svn.wordpress.org/quevedo/) on 2026-10-13:
 
-- `trunk/` está en la 1.4 y lleva archivos de desarrollo que llegan a los usuarios: `README.md`, `phpcs.xml` y `assets/` (banners e iconos).
-- `tags/`: 1.0, 1.1, 1.3 y 1.4. La carpeta `assets/` de la raíz tiene los banners y los iconos de la página del plugin.
-- En este equipo solo está TortoiseSVN, sin el cliente de línea de comandos (`svn.exe`).
+- `trunk/` is at 1.4 and carries development files that reach users: `README.md`, `phpcs.xml` and `assets/` (banners and icons).
+- `tags/`: 1.0, 1.1, 1.3 and 1.4. The root `assets/` folder has the banners and icons for the plugin page.
+- This computer only has TortoiseSVN, without the command-line client (`svn.exe`).
 
-Plan acordado:
+Agreed plan:
 
-1. Instalar el cliente svn (opción «command line client tools» de TortoiseSVN, o SlikSVN con winget). Falta decidir si lo instala Nilo o Claude.
-2. Decidir si se añade `== Upgrade Notice ==` al `readme.txt` por el salto a PHP 8.2. Si se añade, hay que hacerlo antes del paso 4, y la etiqueta v1.5 tendría que moverse o pasar a ser una 1.5.1.
-3. Copia de trabajo fuera del repo (por ejemplo `D:\svn\quevedo`), solo con `trunk/` y `assets/`.
-4. Sustituir `trunk/` por el contenido de `git archive v1.5`, marcar altas y bajas con `svn status` y copiar `trunk/` a `tags/1.5` con `svn cp`, en el mismo commit.
-5. Comparar `assets/` de la raíz con `assets/` del repo; solo se toca si difieren.
-6. Enseñar a Nilo el `svn status` y el `svn diff` antes del commit. El commit lo hace Nilo, con la contraseña SVN de su cuenta de WordPress.org.
-7. Después, descargar el zip de wordpress.org y compararlo con `git archive v1.5`, y revisar la página del plugin (versión 1.5, Requires PHP 8.2).
+1. Install the svn client (the "command line client tools" option of TortoiseSVN, or SlikSVN with winget). Still to decide whether Nilo or Claude installs it.
+2. Decide whether to add `== Upgrade Notice ==` to `readme.txt` because of the jump to PHP 8.2. If it is added, it must be done before step 4, and the v1.5 tag would have to be moved or become a 1.5.1.
+3. Working copy outside the repo (for example `D:\svn\quevedo`), with only `trunk/` and `assets/`.
+4. Replace `trunk/` with the contents of `git archive v1.5`, mark additions and deletions with `svn status`, and copy `trunk/` to `tags/1.5` with `svn cp`, in the same commit.
+5. Compare the root `assets/` with the repo's `assets/`; touch it only if they differ.
+6. Show Nilo the `svn status` and `svn diff` before the commit. Nilo makes the commit, with the SVN password of his WordPress.org account.
+7. Afterwards, download the zip from wordpress.org and compare it with `git archive v1.5`, and check the plugin page (version 1.5, Requires PHP 8.2).
 
-## Entorno de pruebas
+## Test environment
 
-- Sitio de Studio en `C:\Users\manolito\Studio\quevedo` (http://quevedo.local/, admin / password), en español, con el plugin enlazado desde el repo y Plugin Check instalado. Está parado; se arranca con `studio start --path "C:\Users\manolito\Studio\quevedo" --skip-browser` o desde la aplicación de Studio.
-- Para Playground: `blueprint.json` en la raíz del repo. El puerto 9400 puede estar ocupado por otro proyecto: usar `--port 9401` junto con `--site-url`.
+- Studio site at `C:\Users\manolito\Studio\quevedo` (http://quevedo.local/, admin / password), in Spanish, with the plugin linked from the repo (junction to `D:\repos\quevedo`) and Plugin Check installed. It is stopped; start it with `studio start --path "C:\Users\manolito\Studio\quevedo" --skip-browser` or from the Studio app.
+- For Playground: `blueprint.json` at the repo root. Port 9400 may be taken by another project: use `--port 9401` together with `--site-url`.
 
-## Diario
+## Log
 
-- 2026-10-13: sesión cerrada. Plan de publicación por SVN documentado arriba; servidores parados.
-- 2026-10-13: versión 1.5 publicada en GitHub (etiqueta v1.5), probada en Studio con WordPress 7.1.3.
-- 2026-10-13: hito 1.5 fusionado en master. Plugin Check sin errores en el sitio de Studio (Studio/quevedo); su único aviso (load_plugin_textdomain) se resuelve quitando las traducciones incluidas, que ya llegan de translate.wordpress.org (rama chore/remove-bundled-translations, sin fusionar).
-- 2026-10-13: hito 1.5: etiquetas ocultas y redirigidas, páginas de adjunto con el ajuste de WordPress, una sola redirección, imagen por defecto solo en la web, botón «Select image», interruptores accesibles, erratas (cadenas nuevas sin traducir), PHP 8.2 y Tested up to 7.1.
-- 2026-10-13: hito 1.5: corregidos los cuatro fallos (listas, og:image, [lipsum], formatos), comprobación de permisos al guardar, escapado y CSS/JS encolados en admin/. Probado en Playground.
-- 2026-10-13: hito 1.5 abierto en la rama release/1.5; su changelog recoge la limpieza de WPCS. Alcance: los apartados «Bugs» y «Security and WordPress.org review» del BACKLOG.md.
-- 2026-10-13: código limpio de WPCS (composer lint sin avisos) y probado en Playground (rama fix/phpcs, sin fusionar).
-- 2026-10-13: PHPCS configurado con el estándar WordPress completo, prefijo y text domain `quevedo` y `composer lint` (rama chore/phpcs-setup, sin fusionar). Quedan 28 avisos en el código.
-- 2026-10-13: backlog con lo que hay que reparar en BACKLOG.md; el blueprint de Playground, fusionado en master.
-- 2026-10-13: análisis del código y pruebas en Playground con un blueprint nuevo (rama chore/playground-blueprint, sin fusionar).
-- 2026-10-13: guppy/STATUS.md creado.
+Newest entries first. One per work session, brief.
+
+- 2026-10-16: migrated to the new Guppy format (STATUS.json).
+- 2026-10-14: repo moved from `C:\Users\manolito\quevedo` to `D:\repos\quevedo`; Studio plugin junction recreated to point to the new path.
+- 2026-10-13: session closed. SVN release plan documented above; servers stopped.
+- 2026-10-13: version 1.5 published on GitHub (tag v1.5), tested in Studio with WordPress 7.1.3.
+- 2026-10-13: 1.5 milestone merged into master. Plugin Check with no errors on the Studio site (Studio/quevedo); its only warning (load_plugin_textdomain) is resolved by removing the bundled translations, which already come from translate.wordpress.org (branch chore/remove-bundled-translations, not merged).
+- 2026-10-13: 1.5 milestone: tags hidden and redirected, attachment pages following the WordPress setting, a single redirect, default image only on the website, "Select image" button, accessible toggles, typos (new strings untranslated), PHP 8.2 and Tested up to 7.1.
+- 2026-10-13: 1.5 milestone: fixed the four bugs (lists, og:image, [lipsum], formats), capability check on save, escaping, and CSS/JS enqueued in admin/. Tested in Playground.
+- 2026-10-13: 1.5 milestone opened on the release/1.5 branch; its changelog includes the WPCS cleanup. Scope: the "Bugs" and "Security and WordPress.org review" sections of BACKLOG.md.
+- 2026-10-13: code clean under WPCS (composer lint with no warnings) and tested in Playground (branch fix/phpcs, not merged).
+- 2026-10-13: PHPCS configured with the full WordPress standard, prefix and text domain `quevedo`, and `composer lint` (branch chore/phpcs-setup, not merged). 28 warnings left in the code.
+- 2026-10-13: backlog of what needs fixing in BACKLOG.md; the Playground blueprint merged into master.
+- 2026-10-13: code analysis and tests in Playground with a new blueprint (branch chore/playground-blueprint, not merged).
+- 2026-10-13: guppy/STATUS.md created.
