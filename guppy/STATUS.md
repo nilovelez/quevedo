@@ -1,26 +1,18 @@
 # Status
 
-WordPress plugin published on WordPress.org. Version 1.5 is published on GitHub (tag v1.5) and pending upload to WordPress.org: fixes from the code analysis, security, accessibility, PHP 8.2, and translations only from translate.wordpress.org. The code passes WPCS and Plugin Check with no errors.
+WordPress plugin published on WordPress.org. Version 1.5 is published on WordPress.org (SVN r3753561) and on GitHub (tag v1.5): fixes from the code analysis, security, accessibility, PHP 8.2, and translations only from translate.wordpress.org. The code passes WPCS and Plugin Check with no errors.
 
-Next step: publish 1.5 to WordPress.org through SVN. Before that, decide who installs the svn client and whether to add an Upgrade Notice. No blockers.
+No work in progress and no blockers. Next: whatever comes up in the backlog or from users.
 
-## Publishing 1.5 to WordPress.org (pending)
+## Publishing to WordPress.org (SVN)
 
-State of the SVN repository (https://plugins.svn.wordpress.org/quevedo/) on 2026-10-13:
+Version 1.5 was published on 2026-10-18 by Claude, step by step with Nilo's confirmation. How it was done, for the next release:
 
-- `trunk/` is at 1.4 and carries development files that reach users: `README.md`, `phpcs.xml` and `assets/` (banners and icons).
-- `tags/`: 1.0, 1.1, 1.3 and 1.4. The root `assets/` folder has the banners and icons for the plugin page.
-- This computer only has TortoiseSVN, without the command-line client (`svn.exe`).
-
-Agreed plan:
-
-1. Install the svn client (the "command line client tools" option of TortoiseSVN, or SlikSVN with winget). Still to decide whether Nilo or Claude installs it.
-2. Decide whether to add `== Upgrade Notice ==` to `readme.txt` because of the jump to PHP 8.2. If it is added, it must be done before step 4, and the v1.5 tag would have to be moved or become a 1.5.1.
-3. Working copy outside the repo (for example `D:\svn\quevedo`), with only `trunk/` and `assets/`.
-4. Replace `trunk/` with the contents of `git archive v1.5`, mark additions and deletions with `svn status`, and copy `trunk/` to `tags/1.5` with `svn cp`, in the same commit.
-5. Compare the root `assets/` with the repo's `assets/`; touch it only if they differ.
-6. Show Nilo the `svn status` and `svn diff` before the commit. Nilo makes the commit, with the SVN password of his WordPress.org account.
-7. Afterwards, download the zip from wordpress.org and compare it with `git archive v1.5`, and check the plugin page (version 1.5, Requires PHP 8.2).
+- Working copy at `D:\repos-svn\quevedo`, a sparse checkout of https://plugins.svn.wordpress.org/quevedo/: `trunk/` and `assets/` at full depth, `tags/` empty. Run `svn update` before starting.
+- The command-line client is `C:\Program Files\TortoiseSVN\bin\svn.exe`. The WordPress.org credentials of `nilovelez` were cached (check with `svn auth plugins.svn.wordpress.org`); if they are not, Nilo enters the password.
+- Steps: replace the contents of `trunk/` (keeping `.svn`) with `git archive --format=zip v<version>`; `svn add` the new files and `svn rm` the missing ones; `svn cp trunk tags/<version>`; compare the root `assets/` with the repo's by hash; commit trunk and tag together with the message "Release version <version>.".
+- Afterwards: wait for the plugin API to report the new version, download the zip from wordpress.org, compare it with `git archive`, and check the plugin page.
+- The old trunk's development files (`README.md`, `phpcs.xml`, `trunk/assets/`, `languages/`) were removed with 1.5. The root `assets/` matched the repo's and was not touched.
 
 ## Test environment
 
@@ -31,6 +23,7 @@ Agreed plan:
 
 Newest entries first. One per work session, brief.
 
+- 2026-10-18: version 1.5 published on WordPress.org (SVN r3753561), without an Upgrade Notice. Download zip verified identical to `git archive v1.5`; the plugin page shows 1.5 and PHP 8.2.
 - 2026-10-16: migrated to the new Guppy format (STATUS.json).
 - 2026-10-14: repo moved from `C:\Users\manolito\quevedo` to `D:\repos\quevedo`; Studio plugin junction recreated to point to the new path.
 - 2026-10-13: session closed. SVN release plan documented above; servers stopped.
