@@ -4,6 +4,15 @@ WordPress plugin published on WordPress.org. Version 1.5 is published on WordPre
 
 No work in progress and no blockers. Next: whatever comes up in the backlog or from users.
 
+## Pending: migration to bender (Mac mini M1)
+
+The project is moving from the Windows machine to bender. The paths in "Publishing to WordPress.org (SVN)" and "Test environment" below are still the Windows ones. On the first session on bender, update them:
+
+- Run `composer install` (vendor/ is not in the repo).
+- Install `svn` (`brew install subversion`), redo the sparse checkout (`trunk/` and `assets/` at full depth, `tags/` empty) and cache the `nilovelez` credentials again: the cached ones stayed on Windows.
+- Recreate the Studio site with the plugin linked from the clone and Plugin Check installed.
+- Replace the Windows paths in this file with the new ones, remove this section and add a Log entry.
+
 ## Publishing to WordPress.org (SVN)
 
 Version 1.5 was published on 2026-10-18 by Claude, step by step with Nilo's confirmation. How it was done, for the next release:
@@ -22,6 +31,8 @@ Version 1.5 was published on 2026-10-18 by Claude, step by step with Nilo's conf
 ## Log
 
 Newest entries first. One per work session, brief.
+
+- 2026-11-04: preparing the move to bender (Mac mini M1); repo and memory checked. Machine-specific setup listed under "Pending: migration to bender".
 
 - 2026-10-18: version 1.5 published on WordPress.org (SVN r3753561), without an Upgrade Notice. Download zip verified identical to `git archive v1.5`; the plugin page shows 1.5 and PHP 8.2.
 - 2026-10-16: migrated to the new Guppy format (STATUS.json).
